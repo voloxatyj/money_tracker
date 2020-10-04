@@ -4,7 +4,7 @@ import userReducer from './reducers/userReducer'
 import uiReducer from './reducers/uiReducer'
 import dataReducer from './reducers/dataReducer'
 
-// const initialState = {}
+const initialState = {}
 
 // const middleware = [thunk] || [window.thunk.default]
 
@@ -26,7 +26,8 @@ import dataReducer from './reducers/dataReducer'
 // export default store
 
 const reducers = combineReducers({
-	data: userReducer,
+	user: userReducer,
+	data: dataReducer,
 	ui: uiReducer
 })
 
