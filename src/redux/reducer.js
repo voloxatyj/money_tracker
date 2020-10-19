@@ -3,7 +3,7 @@ export const state = {
 		info: {},
 		authenticated: false
 	},
-	items: [],
+	data: [],
 	ui: {
 		loading: false,
 		error: null,

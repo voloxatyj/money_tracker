@@ -12,6 +12,10 @@
   margin: 0;
   box-sizing: border-box;
 }
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--second-color);
+  opacity: 1; /* Firefox */
+}
 .container-fluid {
   background: var(--background);
 }
@@ -25,6 +29,7 @@ nav {
   width: 100%;
   align-items: center;
   padding: 3rem;
+  margin-bottom: 1rem;
 }
 .nav-links {
   display: flex;
@@ -251,6 +256,12 @@ form h1 {
 .social-container a:nth-child(1):after {
   background: #385898;
 }
+.social-container a:nth-child(5):before {
+  border: 2px solid #0077B5;
+}
+.social-container a:nth-child(5):after {
+  background: #0077B5;
+}
 .social-container a:nth-child(2):before {
   border: 2px solid #FF0000;
 }
@@ -297,17 +308,17 @@ form h1 {
   transition: .3s linear;
   z-index: 2;
 }
-.social-container a:nth-child(1) .fas {
-  color: #385898;
-}
 .social-container a:nth-child(2) .fas {
-  color: #FF0000;
+  color:#FF0000;
 }
 .social-container a:nth-child(3) .fas {
-  color: #0077B5;
+  color:#385898;
 }
 .social-container a:nth-child(4) .fas {
-  color:#E1306C;
+  color: #E1306C;
+}
+.social-container a:nth-child(5) .fas {
+  color: #0077B5;
 }
 .social-container a:hover .fas {
   color: white;
@@ -317,7 +328,6 @@ form h1 {
 .social-container a:hover:before {
   transform: scale(1.1);
 }
-
 .form-container input {
   background: #eee;
   border: none;
@@ -426,4 +436,49 @@ form h1 {
 .table-tittle{
     font-size: 26px;
     color: #5B78C7;
+}
+.tools > a {
+  display: flex;
+  background: var(--animate-repeat);
+  height: 75px;
+  width: 75px;
+  margin: 0 15px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
+              -6px -6px 10px -1px rgba(255,255,255,0.7);
+  transition: transform .5s
+}
+.tools > a:hover {
+  box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+              inset -4px -4px 6px -1px rgba(255,255,255,0.7),
+              -0.5px -0.5px 0px rgba(255,255,255,1),
+              0.5px 0.5px 0px rgba(0,0,0,0.15),
+              0px 12px 10px -10px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.01);
+  transform: translateY(2px);
+}  
+.tools > a:hover i {
+  transform: scale(0.9);
+}
+/* Calendar */
+.rdrDayNumber > span {
+  color: var(--main-color);
+}
+.rdrWeekDays > span {
+  color: var(--third-color);
+}
+.rdrMonthAndYearPickers select {
+  color: var(--second-color);
+}
+.rdrMonthAndYearPickers option {
+  color: var(--second-color);
+}
+.rdrNextButton i {
+  border-color: transparent transparent transparent var(--third-color);
+}
+.rdrPprevButton i {
+  border-color: transparent var(--third-color) transparent transparent;
 }

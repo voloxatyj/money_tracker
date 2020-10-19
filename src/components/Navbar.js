@@ -8,23 +8,37 @@ export const Navbar = () => {
 	const authenticated = useSelector(state => state.user.authenticated)
 
 	return (
-		<nav>
-			{authenticated ? (
-			<>
-				<div className="hamburger" onClick={() => setIsHamburger(!isHamburger)}>
-					<div className="line"></div>
-					<div className="line"></div>
-					<div className="line"></div>
-				</div>
-				<ul className={isHamburger ? "nav-links open" : "nav-links"}>
-					<li className={isHamburger ? "fade" : ""}><Link to="/">Home</Link></li>
-					<li className={isHamburger ? "fade" : ""}><Link to="#">Categories</Link></li>
-					<li className={isHamburger ? "fade" : ""}><Link to="#">Diagrams</Link></li>
-				</ul>
-			</>
-			) : (
-			<Link to="/authform" className="sign-in"><i className="fas fa-sign-in-alt fa-5x" style={{ color: "white" }}></i></Link>
-			)}
-		</nav>
-	)
+    <nav>
+      {authenticated ? (
+        <>
+          <div
+            className="hamburger"
+            onClick={() => setIsHamburger(!isHamburger)}
+          >
+            <div className="line"></div>
+            <div className="line"></div>
+            <div className="line"></div>
+          </div>
+          <ul className={isHamburger ? "nav-links open" : "nav-links"}>
+            <li className={isHamburger ? "fade" : ""}>
+              <Link to="/">Home</Link>
+            </li>
+            <li className={isHamburger ? "fade" : ""}>
+              <Link to="/table">Table</Link>
+            </li>
+            <li className={isHamburger ? "fade" : ""}>
+              <Link to="/diagrams">Diagrams</Link>
+            </li>
+          </ul>
+        </>
+      ) : (
+        <Link to="/authform" className="sign-in">
+          <i
+            className="fas fa-sign-in-alt fa-5x"
+            style={{ color: "white" }}
+          ></i>
+        </Link>
+      )}
+    </nav>
+  );
 }

@@ -13,6 +13,9 @@ body {
   display: flex;
   flex-direction: column;
 }
+.datatable-responsive-demo {
+  padding: 1rem;
+}
 .datatable-responsive-demo
   .p-datatable-responsive-demo
   .p-datatable-tbody
@@ -95,12 +98,6 @@ body {
   justify-content: space-between;
 }
 
-/* tr{
-    background-color: salmon !important;
-} */
-/* .p-button.p-component.p-button-danger.btn.p-disabled :disabled{
-    background: #d7769b !important;
-} */
 .p-toolbar.p-component.p-mb-4,
 .p-dialog-header {
   background-color: #6370eab3 !important;
@@ -139,16 +136,7 @@ td {
 }
 
 .btn {
-  /*  
-    background-color: #6d7fb3; */
   margin-right: 10px !important;
-  /* height: 50px;
-    width: 150px !important;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border-radius: 40px; */
 }
 #pr_id_2 {
   background-color: turquoise;
@@ -198,14 +186,13 @@ display: flex;
       flex-direction: column;
   }
   .balance-wrapper{
-
-margin-top: 10px;
+    margin-top: 10px;
   } 
 
   .p-button.p-component.p-button-rounded.p-button-success.p-mr-2.btn-small.p-button-icon-only{
       margin-bottom: 15px;
-
   }
+
   .p-toolbar.p-component.p-mb-4{
     display: flex;
     flex-direction: column;

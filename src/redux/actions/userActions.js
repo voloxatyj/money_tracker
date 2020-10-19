@@ -1,12 +1,21 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from '../types'
+import {
+  SET_ERRORS,
+  CLEAR_ERRORS,
+  LOADING_UI,
+  SET_AUTHENTICATED,
+  SET_UNAUTHENTICATED,
+  STOP_LOADING_UI,
+} from "../types";
 import axios from 'axios'
+import { getData } from './dataActions'
 
 export const loginUser = (userData, history) => dispatch => {
 	dispatch({ type: LOADING_UI })
 	axios.post('/login', userData)
 	.then(res => {
 		setAuthorizationHeader(res.data)
-		dispatch(getUserData('login'));
+		dispatch(getUser())
+		dispatch(getData())
 		dispatch({ type: CLEAR_ERRORS })
 		history.push('/table')
 	})
@@ -19,24 +28,15 @@ export const loginUser = (userData, history) => dispatch => {
 	)
 }
 
-export const getUserData = type => dispatch => {
+export const getUser = () => dispatch => {
 	axios.defaults.headers.common['Authorization'] = localStorage.getItem('DBAuthToken') || undefined
 	dispatch({ type: LOADING_UI })
-	type === 'login' ?
-		axios.get('/items')
+		axios.get('/user')
 			.then(res => {
 				dispatch({
-					type: SET_USER,
-					payload: res.data
-				})
-			})
-			.catch(err => console.log(err))
-		: axios.get('/user')
-			.then(res => {
-				dispatch({
-					type: SET_USER,
-					payload: res.data
-				})
+          payload: res.data,
+          type: SET_AUTHENTICATED,
+        });
 			})
 			.catch(err => console.log(err))
 }
@@ -46,7 +46,8 @@ export const signUpUser = (userData, history) => dispatch => {
 	axios.post('/signup', userData)
 		.then(res => {
 			setAuthorizationHeader(res.data)
-			dispatch(getUserData())
+			dispatch(getUser())
+			dispatch(getData())
 			dispatch({ type: "CLEAR_ERRORS" })
 		})
 		.then(() => history.push('/table'))
@@ -55,8 +56,7 @@ export const signUpUser = (userData, history) => dispatch => {
 				type: SET_ERRORS,
 				payload: err.response.data
 			})
-		}
-		)
+		})
 }
 
 export const setAuthorizationHeader = ({ token }) => {
@@ -69,4 +69,11 @@ export const logOutUser = () => dispatch => {
 	localStorage.removeItem('DBAuthToken')
 	delete axios.defaults.headers.common['Authorization']
 	dispatch({ type: SET_UNAUTHENTICATED })
+	dispatch({ type: STOP_LOADING_UI });
+}
+
+export const uploadImage = formData => dispatch => {
+	axios.post('/user/uploadImage', formData)
+		.then(() => dispatch(getUser()))
+		.catch(err => console.log(err))
 }

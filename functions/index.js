@@ -17,7 +17,7 @@ app.delete('/item/:itemId', DBAuth, deleteItem)
 // user Routes
 app.post('/signup', signUp)
 app.post('/login', login)
-app.post('/uploadImage', DBAuth, uploadImage)
+app.post('/user/uploadImage', DBAuth, uploadImage)
 app.get('/user', DBAuth, (req,res) => {
 	let item = {}
 	db.doc(`/${req.user.email.split('@')[0]}/mainInfo`)
