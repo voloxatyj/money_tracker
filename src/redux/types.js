@@ -10,3 +10,4 @@ export const STOP_LOADING_UI = 'STOP_LOADING_UI'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 // DATA reducer types
 export const LOADING_DATA = 'LOADING_DATA'
+export const SET_ITEM = 'SET_ITEM'

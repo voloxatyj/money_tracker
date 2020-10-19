@@ -1,7 +1,8 @@
-import { LOADING_DATA } from "../types";
+import { LOADING_DATA, SET_ITEM } from "../types";
 
 const initialState = {
-  data: []
+  data: [],
+  credentials: []
 };
 
 export default function (state = initialState, action) {
@@ -11,6 +12,12 @@ export default function (state = initialState, action) {
         ...state,
         data: action.payload.filter(item=>!item.email),
       };
+    case SET_ITEM: 
+    console.log('OUTPUT: action.payload', action.payload)
+      return {
+        ...state,
+        credentials: action.payload
+      }
     default:
       return state;
   }

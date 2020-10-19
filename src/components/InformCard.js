@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { Calendar } from 'react-date-range'
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import moment from 'moment'
 import categoryURL from './layouts/categoryURL'
 // Redux
@@ -19,8 +16,9 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
-	TextField,
-	Grid
+	Select,
+	MenuItem,
+	FormControl
 	} from '@material-ui/core'
 
 const useStyles = makeStyles({
@@ -59,14 +57,13 @@ export default function InformCard(props) {
 	const [profit, setProfit] = useState('')
 	const [open, setOpen] = useState(false)
 	const [openCalendar, setOpenCalendar] = useState(false)
-	// const credentials = useSelector(state => state.user.credentials) 
+	const credentials = useSelector(state => state.data.credentials) 
 	const dispatch = useDispatch()
+	// console.log(credentials)
 	useEffect(()=> {
-		console.log(categoryURL)
-	}
-		
-	)
+	})
   return (
+		credentials.length !== 0 &&
 		<Fragment>
 			<Link to="#" onClick={()=>setOpen(true)} className="animate__animated animate__flipInX animate__delay-.5s">
         <i className="fas fa-info fa-2x"></i>
@@ -82,7 +79,7 @@ export default function InformCard(props) {
 					<FormControl className={classes.container}>
 						<input 
 							type="text" 
-							value={description}
+							value={credentials.description}
 							className={classes.input}
 							onChange={event => console.log(event.target.value)} 
 						/>
@@ -104,7 +101,7 @@ export default function InformCard(props) {
 						<div onClick={()=> setOpenCalendar(true)}>
 							<input 
 								type="text" 
-								value={moment(createdAt).format('dddd MMM Do')}
+								value={moment(credentials.createdAt).format('dddd MMM Do')}
 								className={classes.input}
 								onChange={event => (event.target.value)}
 								disabled
@@ -126,17 +123,17 @@ export default function InformCard(props) {
 								/>
 							</DialogContent>
 						</Dialog>
-						{/* <input 
+						<input 
 								type="image"
-								src={props.item.imageUrl}
+								src={credentials.imageUrl}
 								className={classes.input}
 								onChange={event => (event.target.value)}
 								disabled
 								style={{cursor: "pointer"}}
-							/> */}
+							/>
 						<input 
 							type="number" 
-							value={price}
+							value={credentials.price}
 							className={classes.input}
 							onChange={event => (event.target.value)}
 						/>

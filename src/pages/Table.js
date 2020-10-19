@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { SET_ITEM } from '../redux/types'
 import moment from 'moment'
-import { makeStyles } from "@material-ui/core/styles";
 import { Button } from '../components/layouts/Button'
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
+import { 
+  makeStyles,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  AppBar,
+  Toolbar,
+  Typography,
+  InputBase
+ } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import Informcard from '../components/InformCard'
 
@@ -123,10 +126,9 @@ export const StickyHeadTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const state = useSelector(state => state.data.data)
-  const [openSnackBar, setOpenSnackBar] = useState(false)
-  const showSnackBar = () => {
-
-  }
+  const [id, setId] = useState(null)
+  const [toolBtn, setToolBtn] = useState(false)
+  const dispatch = useDispatch()
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -193,7 +195,7 @@ export const StickyHeadTable = () => {
                   </TableCell>
                 ))}
                 <TableCell style={{backgroundColor: "var(--background)"}} className="tools">
-                  <Informcard />
+                {toolBtn && <Informcard />}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -206,8 +208,13 @@ export const StickyHeadTable = () => {
                       role="checkbox"
                       tabIndex={-1}
                       key={item.itemId}
+                      data-id={item.itemId}
                       className={classes.row}
-                      onClick={()=>setOpenSnackBar(true)}
+                      onClick={(e)=>{
+                        setToolBtn(true)
+                        setId(e.target.parentNode.getAttribute("data-id"))
+                        dispatch({type: SET_ITEM, payload: item})
+                      }}
                     >
                       <TableCell align="justify" className={classes.cell}>
                         {item.description}
@@ -226,9 +233,10 @@ export const StickyHeadTable = () => {
                         {item.price}
                       </TableCell>
                       <TableCell className="tools">
+                        {toolBtn && id === item.itemId &&
                         <Link to="#" id="recycle" className="animate__animated animate__flipInX animate__delay-.5s">
                           <i className="fas fa-recycle fa-2x"></i>
-                        </Link>
+                        </Link>}
                       </TableCell>
                     </TableRow>
                   )}
