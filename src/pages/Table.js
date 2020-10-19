@@ -192,7 +192,9 @@ export const StickyHeadTable = () => {
                     {item}
                   </TableCell>
                 ))}
-                <TableCell style={{backgroundColor: "var(--background)"}} className="tools"></TableCell>
+                <TableCell style={{backgroundColor: "var(--background)"}} className="tools">
+                  <Informcard />
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -224,10 +226,9 @@ export const StickyHeadTable = () => {
                         {item.price}
                       </TableCell>
                       <TableCell className="tools">
-                        <Link to="#">
-                          <i className="fas fa-recycle fa-2x" style={{color: "#FF0000"}}></i>
+                        <Link to="#" id="recycle" className="animate__animated animate__flipInX animate__delay-.5s">
+                          <i className="fas fa-recycle fa-2x"></i>
                         </Link>
-                        <Informcard item={item} />
                       </TableCell>
                     </TableRow>
                   )}

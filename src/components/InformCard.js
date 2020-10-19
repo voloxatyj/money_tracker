@@ -52,11 +52,11 @@ const useStyles = makeStyles({
 
 export default function InformCard(props) {
   const classes = useStyles();
-	const [category, setCategory] = useState(props.item.category)
-	const [description, setDescription] = useState(props.item.description)
-	const [createdAt, setCreatedAt] = useState(props.item.createdAt)
-	const [price, setPrice] = useState(props.item.price)
-	const [profit, setProfit] = useState(props.item.profit)
+	const [category, setCategory] = useState('')
+	const [description, setDescription] = useState('')
+	const [createdAt, setCreatedAt] = useState('')
+	const [price, setPrice] = useState('')
+	const [profit, setProfit] = useState('')
 	const [open, setOpen] = useState(false)
 	const [openCalendar, setOpenCalendar] = useState(false)
 	// const credentials = useSelector(state => state.user.credentials) 
@@ -68,10 +68,8 @@ export default function InformCard(props) {
 	)
   return (
 		<Fragment>
-			<Link to="#" onClick={()=>setOpen(true)} >
-        <i className="fas fa-info fa-2x"
-        	style={{color: "var(--third-color)"}} 
-        ></i>
+			<Link to="#" onClick={()=>setOpen(true)} className="animate__animated animate__flipInX animate__delay-.5s">
+        <i className="fas fa-info fa-2x"></i>
       </Link>
 			<Dialog
 				open={open}
@@ -128,14 +126,14 @@ export default function InformCard(props) {
 								/>
 							</DialogContent>
 						</Dialog>
-						<input 
+						{/* <input 
 								type="image"
 								src={props.item.imageUrl}
 								className={classes.input}
 								onChange={event => (event.target.value)}
 								disabled
 								style={{cursor: "pointer"}}
-							/>
+							/> */}
 						<input 
 							type="number" 
 							value={price}

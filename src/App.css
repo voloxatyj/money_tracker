@@ -437,31 +437,46 @@ form h1 {
     font-size: 26px;
     color: #5B78C7;
 }
+/* Tools buttons */
 .tools > a {
-  display: flex;
-  background: var(--animate-repeat);
-  height: 75px;
-  width: 75px;
-  margin: 0 15px;
-  border-radius: 8px;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: block;
+  text-align: center;
+  margin: 0 10px;
+  border-radius: 50%;
+  padding: 7px;
+  box-sizing: border-box;
   text-decoration: none;
-  box-shadow: 6px 6px 10px -1px rgba(0,0,0,0.15),
-              -6px -6px 10px -1px rgba(255,255,255,0.7);
-  transition: transform .5s
+  box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+  background: linear-gradient(0deg, #ddd, #fff);
+  transition: .5s;
 }
 .tools > a:hover {
-  box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
-              inset -4px -4px 6px -1px rgba(255,255,255,0.7),
-              -0.5px -0.5px 0px rgba(255,255,255,1),
-              0.5px 0.5px 0px rgba(0,0,0,0.15),
-              0px 12px 10px -10px rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.01);
-  transform: translateY(2px);
-}  
-.tools > a:hover i {
-  transform: scale(0.9);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+.tools > a > .fas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: linear-gradient(0deg, #fff, #ddd);
+  border-radius: 50%;
+  line-height: calc(60px - 12px);
+  color: #262626;
+  transition: .5s;
+}
+.tools > a:hover > .fas.fa-info {
+  color: var(--third-color);
+}
+.tools > a:hover {
+  background: var(--third-color);
+}
+.tools > a:hover > .fas.fa-recycle {
+  color: #FF0000;
+}
+.tools > #recycle:hover {
+  background: #FF0000;
 }
 /* Calendar */
 .rdrDayNumber > span {
