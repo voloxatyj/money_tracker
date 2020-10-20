@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/money_tracker-Make-Save-/static/css/main.6a16dcc3.chunk.css",
+    "main.js": "/money_tracker-Make-Save-/static/js/main.9b8ab208.chunk.js",
+    "main.js.map": "/money_tracker-Make-Save-/static/js/main.9b8ab208.chunk.js.map",
+    "runtime-main.js": "/money_tracker-Make-Save-/static/js/runtime-main.a76edcbb.js",
+    "runtime-main.js.map": "/money_tracker-Make-Save-/static/js/runtime-main.a76edcbb.js.map",
+    "static/css/2.9229e6f1.chunk.css": "/money_tracker-Make-Save-/static/css/2.9229e6f1.chunk.css",
+    "static/js/2.2700c9c3.chunk.js": "/money_tracker-Make-Save-/static/js/2.2700c9c3.chunk.js",
+    "static/js/2.2700c9c3.chunk.js.map": "/money_tracker-Make-Save-/static/js/2.2700c9c3.chunk.js.map",
+    "index.html": "/money_tracker-Make-Save-/index.html",
+    "precache-manifest.c3446c7bf9dee7fe456cf4882044869d.js": "/money_tracker-Make-Save-/precache-manifest.c3446c7bf9dee7fe456cf4882044869d.js",
+    "service-worker.js": "/money_tracker-Make-Save-/service-worker.js",
+    "static/css/2.9229e6f1.chunk.css.map": "/money_tracker-Make-Save-/static/css/2.9229e6f1.chunk.css.map",
+    "static/css/main.6a16dcc3.chunk.css.map": "/money_tracker-Make-Save-/static/css/main.6a16dcc3.chunk.css.map",
+    "static/js/2.2700c9c3.chunk.js.LICENSE.txt": "/money_tracker-Make-Save-/static/js/2.2700c9c3.chunk.js.LICENSE.txt",
+    "static/media/paper.png": "/money_tracker-Make-Save-/static/media/paper.44bf012b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a76edcbb.js",
+    "static/css/2.9229e6f1.chunk.css",
+    "static/js/2.2700c9c3.chunk.js",
+    "static/css/main.6a16dcc3.chunk.css",
+    "static/js/main.9b8ab208.chunk.js"
+  ]
+}
