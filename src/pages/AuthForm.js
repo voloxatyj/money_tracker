@@ -55,7 +55,8 @@ export const AuthForm = () => {
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
 							<input 
 								type="password" 
-								value={confirmPassword} 
+								value={confirmPassword}
+								style={{marginBottom: '1.5rem'}} 
 								onChange={event=>setConfirmPassword(event.target.value)} 
 								placeholder="confirmPassword" />
 							{errors.confirmPassword && (<span style={{ color: 'red' }}>{errors.confirmPassword}</span>)}
@@ -89,7 +90,11 @@ export const AuthForm = () => {
 								onChange={event=>setPassword(event.target.value)} 
 								placeholder="Password" />
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
-							<Link to="#" onClick={() => setToggleSlides(!toggleSlides)} className="password">Forgot your password?</Link>
+							<Link to="#" onClick={() => {
+								setToggleSlides(!toggleSlides)
+								setPassword('')
+								setEmail('')
+								}} className="password">Forgot your password?</Link>
 						{ui.loading ? <i className="fas fa-spinner fa-pulse fa-lg" style={{ color: "var(--main-color)", marginTop: "1em" }}></i> : <Button type="submit">Sign In</Button>}
 						</form>
 					</div>

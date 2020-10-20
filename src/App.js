@@ -39,9 +39,9 @@ export const App = () => {
             <Navbar />
             <Card />
             <Route exact path="/" component={Home} />
-            <Route path="/table" component={StickyHeadTable} />
-            <Route path="/authform" component={AuthForm} />
-            <Route path="/diagrams" component={Diagrams} />
+            <Route exact path="/table" component={StickyHeadTable} />
+            <Route exact path="/authform" component={AuthForm} />
+            <Route exact path="/diagrams" component={Diagrams} />
           </>
         </Switch>
       </Router>

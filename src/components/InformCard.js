@@ -125,6 +125,7 @@ export default function InformCard(props) {
 						</Dialog>
 						<input 
 								type="image"
+								alt="avatar"
 								src={credentials.imageUrl}
 								className={classes.input}
 								onChange={event => (event.target.value)}

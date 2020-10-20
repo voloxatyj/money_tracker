@@ -42,6 +42,10 @@ nav {
   color: white;
   font-size: 2rem;
 }
+.nav-links li .selected {
+  color: var(--third-color);
+  font-weight: bolder;
+}
 .landing {
   display: flex;
   justify-content: center;

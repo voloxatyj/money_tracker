@@ -31,7 +31,6 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.0"
   },
-  "homepage": ".",
   "scripts": {
     "start": "sudo sysctl -w fs.inotify.max_user_watches=100000 && react-scripts start",
     "build": "react-scripts build",

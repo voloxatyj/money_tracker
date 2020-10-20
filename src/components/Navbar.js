@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 export const Navbar = () => {
@@ -21,13 +21,13 @@ export const Navbar = () => {
           </div>
           <ul className={isHamburger ? "nav-links open" : "nav-links"}>
             <li className={isHamburger ? "fade" : ""}>
-              <Link to="/">Home</Link>
+              <NavLink exact to="/" activeClassName="selected">Home</NavLink>
             </li>
             <li className={isHamburger ? "fade" : ""}>
-              <Link to="/table">Table</Link>
+              <NavLink to="/table" activeClassName="selected">Table</NavLink>
             </li>
             <li className={isHamburger ? "fade" : ""}>
-              <Link to="/diagrams">Diagrams</Link>
+              <NavLink to="/diagrams" activeClassName="selected">Diagrams</NavLink>
             </li>
           </ul>
         </>

@@ -17,7 +17,7 @@ export const loginUser = (userData, history) => dispatch => {
 		dispatch(getUser())
 		dispatch(getData())
 		dispatch({ type: CLEAR_ERRORS })
-		history.push('/table')
+		history.push('/')
 	})
 	.catch(err => {
 		dispatch({
@@ -50,7 +50,7 @@ export const signUpUser = (userData, history) => dispatch => {
 			dispatch(getData())
 			dispatch({ type: "CLEAR_ERRORS" })
 		})
-		.then(() => history.push('/table'))
+		.then(() => history.push('/'))
 		.catch(err => {
 			dispatch({
 				type: SET_ERRORS,
