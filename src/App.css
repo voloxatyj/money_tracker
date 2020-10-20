@@ -28,8 +28,6 @@ nav {
   justify-content: flex-end;
   width: 100%;
   align-items: center;
-  padding: 3rem;
-  margin-bottom: 1rem;
 }
 .nav-links {
   display: flex;
@@ -46,7 +44,6 @@ nav {
 }
 .landing {
   display: flex;
-  height: 100vh;
   justify-content: center;
   align-items: center;
   transition: all 1s ease-out;
@@ -66,11 +63,6 @@ nav {
 @media screen and (max-width: 1024px) {
   .sign-in {
     float: right;
-    padding-right: 1rem;
-  }
-  nav {
-    display: block;
-    padding: 0;
   }
   .landing {
     height: 100vh;
@@ -178,7 +170,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   flex-direction: column;
   background: var(--background);
 }
@@ -213,7 +205,15 @@ a {
   color: #333;
   font-size: 14px;
   text-decoration: none;
-  margin: 15px 0;
+  margin: 15px 15px 0 15px;
+}
+.password {
+  padding-bottom: 1rem;
+}
+.password:hover {
+  text-decoration: underline;
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
 }
 .form-container form {
   background: #fff;

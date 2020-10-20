@@ -28,6 +28,7 @@ export const Card = () => {
 	}
 
 	return (
+    authenticated && info !== undefined && (
     <CardContainer
       className="animate__animated animate__fadeInDownBig"
       style={{
@@ -38,57 +39,52 @@ export const Card = () => {
         transition: "all 1s ease-out",
       }}
     >
-      {authenticated && info !== undefined && (
-        <>
-          <section>
-            <img className="img" src={info.imageUrl} alt="avatar" />
-            <div>
-              <h2>{info.name}</h2>
-              <p>{info.email}</p>
-              <p>Joined {moment(info.createdAt).fromNow()}</p>
-            </div>
-            <div className="social-container card">
-                <input 
-                  type="file"
-                  id="imageInput"
-                  hidden="hidden"
-                  onChange={(event) => handleImageChange(event)}
-                />
-              <Link to="#" className="icons" onClick={handleEditImage}>
-                  <i className="fas fa-users-cog"></i>
-              </Link>
-              
-              <Link to="/table" className="icons">
-                <i className="fas fa-table"></i>
-              </Link>
-              <Link to="/diagrams" className="icons">
-                <i className="fas fa-chart-bar"></i>
-              </Link>
-              <Link
-                to="/login"
-                className="icons"
-                onClick={() => {
-                  store.dispatch(logOutUser());
-                }}
-              >
-                <i className="fas fa-sign-out-alt"></i>
-              </Link>
-            </div>
-          </section>
-          <div className="balance">
-            <img src={diary} alt="diary" />
-            <div className="context">
-              <h1 style={{ color: "green" }}>earnings</h1>
-              <i className="fas fa-minus"></i>
-              <h1 style={{ color: "red" }}>spending</h1>
-              <span className="span-line"></span>
-              <FunctionsIcon style={{ color: "var(--second-color)" }} />
-            </div>
-          </div>
-        </>
-      )}
+      <section>
+        <img className="img" src={info.imageUrl} alt="avatar" />
+      <div>
+        <h2>{info.name}</h2>
+        <p>{info.email}</p>
+        <p>Joined {moment(info.createdAt).fromNow()}</p>
+      </div>
+      <div className="social-container card">
+        <input 
+          type="file"
+          id="imageInput"
+          hidden="hidden"
+          onChange={(event) => handleImageChange(event)}
+        />
+        <Link to="#" className="icons" onClick={handleEditImage}>
+          <i className="fas fa-users-cog"></i>
+        </Link>  
+        <Link to="/table" className="icons">
+          <i className="fas fa-table"></i>
+        </Link>
+        <Link to="/diagrams" className="icons">
+          <i className="fas fa-chart-bar"></i>
+        </Link>
+        <Link
+          to="/authform"
+          className="icons"
+          onClick={() => {
+          store.dispatch(logOutUser());
+          }}
+        >
+          <i className="fas fa-sign-out-alt"></i>
+        </Link>
+      </div>
+    </section>
+    <div className="balance">
+      <img src={diary} alt="diary" />
+      <div className="context">
+        <h1 style={{ color: "green" }}>earnings</h1>
+        <i className="fas fa-minus"></i>
+        <h1 style={{ color: "red" }}>spending</h1>
+        <span className="span-line"></span>
+        <FunctionsIcon style={{ color: "var(--second-color)" }} />
+      </div>
+    </div>
     </CardContainer>
-  );
+  ))
 }
 
 const CardContainer = styled.div`

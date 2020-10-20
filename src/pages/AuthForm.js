@@ -89,7 +89,7 @@ export const AuthForm = () => {
 								onChange={event=>setPassword(event.target.value)} 
 								placeholder="Password" />
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
-							<Link to="#" onClick={() => setToggleSlides(!toggleSlides)}>Forgot your password?</Link>
+							<Link to="#" onClick={() => setToggleSlides(!toggleSlides)} className="password">Forgot your password?</Link>
 						{ui.loading ? <i className="fas fa-spinner fa-pulse fa-lg" style={{ color: "var(--main-color)", marginTop: "1em" }}></i> : <Button type="submit">Sign In</Button>}
 						</form>
 					</div>
