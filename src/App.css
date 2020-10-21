@@ -21,13 +21,18 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 }
 /* Navbar */
 nav {
-  height: 10vh;
   background: var(--main-color);
   display: flex;
   transition: all 1s ease-out;
-  justify-content: flex-end;
-  width: 100%;
+  justify-content: space-between;
   align-items: center;
+  margin: 5px;
+}
+nav svg {
+  margin: 10px 15px;
+}
+nav a {
+  margin: 10px 15px;
 }
 .nav-links {
   display: flex;
@@ -191,6 +196,14 @@ nav {
 }
 h1 {
   font-weight: bold;
+}
+.far {
+  position: relative;
+  top: -7.5%;
+  left: 40%;
+  color: var(--second-color);
+  cursor: pointer;
+  height: 0%;
 }
 p {
   font-size: 14px;

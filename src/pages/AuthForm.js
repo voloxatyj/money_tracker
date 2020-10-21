@@ -14,9 +14,10 @@ export const AuthForm = () => {
 	const [password, setPassword] = useState('')
 	const [confirmPassword, setConfirmPassword] = useState('')
 	const [errors, setErrors] = useState('') 
-	
+	const [seeText, setSeeText] = useState(false)
+
 	useEffect(() => {ui.error !== null ? setErrors(ui.error) : setErrors('')}, [ui.error])
-	
+	useEffect(()=>console.log(seeText),[seeText])
 	return (
 			<div className="containerForm">
 				<div className={toggleSlides ? "container right-panel-active" : "container"}>
@@ -48,17 +49,18 @@ export const AuthForm = () => {
 								placeholder="Email" />
 							{errors.email && (<span style={{color: 'red'}}>{errors.email}</span>)}
 							<input 
-								type="password" 
+								type={seeText?"text":"password"}
 								value={password} 
 								onChange={event=>setPassword(event.target.value)} 
 								placeholder="Password" />
+							{seeText?<i className="far fa-eye fa-lg" onClick={()=>setSeeText(true)}></i>:<i className="far fa-eye-slash fa-lg" onClick={()=>setSeeText(false)}></i>}
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
 							<input 
 								type="password" 
 								value={confirmPassword}
 								style={{marginBottom: '1.5rem'}} 
 								onChange={event=>setConfirmPassword(event.target.value)} 
-								placeholder="confirmPassword" />
+								placeholder="Confirm Password" />
 							{errors.confirmPassword && (<span style={{ color: 'red' }}>{errors.confirmPassword}</span>)}
 							{ui.loading ? <i className="fas fa-spinner fa-pulse fa-lg" style={{ color: "var(--main-color)", marginTop: "1em" }}></i> : <Button type="submit">Sign Up</Button>}
 						</form>
@@ -85,10 +87,11 @@ export const AuthForm = () => {
 								placeholder="Email" />
 							{errors.email && (<span style={{ color: 'red' }}>{errors.email}</span>)}
 							<input 
-								type="password" 
+								type={seeText?"text":"password"} 
 								value={password} 
 								onChange={event=>setPassword(event.target.value)} 
 								placeholder="Password" />
+								{seeText?<i className="far fa-eye fa-lg" onClick={()=>setSeeText(false)}></i>:<i className="far fa-eye-slash fa-lg" onClick={()=>setSeeText(true)}></i>}
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
 							<Link to="#" onClick={() => {
 								setToggleSlides(!toggleSlides)
