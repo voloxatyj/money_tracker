@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
         data: action.payload.filter(item=>!item.email),
       };
     case SET_ITEM: 
-    console.log('OUTPUT: action.payload', action.payload)
+    // console.log('OUTPUT: action.payload', action.payload)
       return {
         ...state,
         credentials: action.payload

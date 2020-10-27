@@ -150,7 +150,72 @@ nav a {
     opacity: 1;
   }
 }
-
+@media screen and (max-width: 775px) {
+  .social-container a:before,
+  .social-container a:after {
+    height: 35px !important;
+    width: 35px !important;
+  }
+  .social-container {
+    display: inline-flex;
+    max-width: 100%;
+  }
+  .social-container a {
+    margin: 0 5px;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+}
+@media screen and (max-width: 660px) {
+   h1 {
+    font-size: 1.5em;
+  }
+}
+@media screen and (max-width: 540px) {
+  input {
+    font-size: .5rem;
+  }
+  .fa-lg {
+    font-size: 1em;;
+  }
+  button {
+    padding: 12px 35px !important;
+    font-size: 10px !important;
+  }
+  .far {
+    top: -7% !important;
+  }
+  span:nth-last-of-type(1) {
+    top: -10.5% !important;
+  }
+  .social-container a i {
+    font-size: 15px !important;
+  }
+  .social-container a:before,
+  .social-container a:after {
+    height: 25px !important;
+    width: 25px !important;
+  }
+}
+@media screen and (max-width: 450px) {
+  input {
+    font-size: .4rem;
+  }
+  .fa-lg {
+    font-size: .8em;;
+  }
+  button {
+    padding: 12px 35px !important;
+    font-size: 8px !important;
+  }
+  .far {
+    top: -6.4% !important;
+  }
+  span:nth-last-of-type(1) {
+    top: -9.4% !important;
+} 
+}
 /* LOGO */
 #logo {
   position: fixed;
@@ -204,6 +269,9 @@ h1 {
   color: var(--second-color);
   cursor: pointer;
   height: 0%;
+}
+span:nth-last-of-type(1) {
+  top: -11%;
 }
 p {
   font-size: 14px;
@@ -274,10 +342,10 @@ form h1 {
   background: #385898;
 }
 .social-container a:nth-child(5):before {
-  border: 2px solid #0077B5;
+  border: 2px solid #385898;
 }
 .social-container a:nth-child(5):after {
-  background: #0077B5;
+  background: #385898;
 }
 .social-container a:nth-child(2):before {
   border: 2px solid #FF0000;
@@ -292,10 +360,10 @@ form h1 {
   background: #0077B5;
 }
 .social-container a:nth-child(4):before {
-  border: 2px solid #E1306C;
+  border: 2px solid black;
 }
 .social-container a:nth-child(4):after {
-  background: #E1306C;
+  background: black;
 }
 .social-container a:after {
   opacity: 0;
@@ -318,7 +386,7 @@ form h1 {
   color: #0077B5;
 }
 .social-container a:nth-child(4) .fab {
-  color:#E1306C;
+  color: black;
 }
 .social-container a:hover .fab {
   color: white;
@@ -329,13 +397,13 @@ form h1 {
   color:#FF0000;
 }
 .social-container a:nth-child(3) .fas {
-  color:#385898;
+  color: #0077B5;
 }
 .social-container a:nth-child(4) .fas {
-  color: #E1306C;
+  color: black;
 }
 .social-container a:nth-child(5) .fas {
-  color: #0077B5;
+  color: #385898;
 }
 .social-container a:hover .fas {
   color: white;
@@ -351,6 +419,7 @@ form h1 {
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
+  transition: all .1s linear
 }
 .form-container {
   position: absolute;
@@ -513,4 +582,29 @@ form h1 {
 }
 .rdrPprevButton i {
   border-color: transparent var(--third-color) transparent transparent;
+}
+/* InformCard */
+.form-field {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-field > h3 {
+  color: var(--third-color);
+  margin-right: .5rem;
+}
+.select-images {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--third-color);
+  border-radius: 50px;
+}
+.select-menu {
+  display: inline-flex;
+  align-items: center;
+  padding: .3rem;
+}
+.select-menu > p {
+  margin: 0;
+  padding-right: .3rem;
 }

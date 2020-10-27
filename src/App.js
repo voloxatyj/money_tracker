@@ -14,11 +14,12 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import { logOutUser, getUser } from './redux/actions/userActions'
 import { getData } from './redux/actions/dataActions'
+import InformCard from './components/InformCard'
 
 // axios.defaults.baseURL = "https://us-central1-make-and-save-c1e7a.cloudfunctions.net/api"
 axios.defaults.baseURL = "http://localhost:5000/make-and-save-c1e7a/us-central1/api"
 
-const token = localStorage.DBAuthToken || undefined
+const token = localStorage.getItem('DBAuthToken') || undefined
 if (token) {
   const decodedToken = jwtDecode(token)
   if (decodedToken.exp * 1000 < Date.now()) {
@@ -40,6 +41,7 @@ export const App = () => {
             <Card />
             <Route exact path="/" component={Home} />
             <Route exact path="/table" component={StickyHeadTable} />
+            <Route exact path="/table/:item" component={InformCard} />
             <Route exact path="/authform" component={AuthForm} />
             <Route exact path="/diagrams" component={Diagrams} />
           </>

@@ -20,6 +20,7 @@ import {
 	MenuItem,
 	FormControl
 	} from '@material-ui/core'
+import { Category } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
@@ -27,24 +28,38 @@ const useStyles = makeStyles({
 	},
 	container: {
 		display: "grid",
-		justifyContent: "center"
+		justifyContent: "center",
 	},
 	input: {
 		background: "#eee",
 		padding: "12px 15px",
 		margin: "8px 0",
-		width: "100%",
 		border: "2px solid var(--third-color)",
-		borderRadius: "5px"
+		borderRadius: "5px",
+		maxHeight: "5vh",
+		fontFamily: ["Architects Daughter", "cursive"].join(","),
+	},
+	inputImg: {
+		padding: "12px 15px",
+		margin: "8px 0",
+		border: "2px solid var(--third-color)",
+		borderRadius: "5px",
 	},
 	title: {
 		backgroundColor: "var(--background)",
 		"&>h2": {
 			fontFamily: ["Architects Daughter", "cursive"].join(","),
-			fontSize: "2rem",
+			fontSize: "1.7rem",
 			letterSpacing: ".9em",
 			textAlign: "center"
 		}
+	},
+	menu: {
+		fontFamily: ["Architects Daughter", "cursive"].join(","),
+		background: "var(--background)",
+		color: "var(--third-color)",
+		// display: "inline-flex",
+		// alignItems: "center"
 	}
 });
 
@@ -58,10 +73,10 @@ export default function InformCard(props) {
 	const [open, setOpen] = useState(false)
 	const [openCalendar, setOpenCalendar] = useState(false)
 	const credentials = useSelector(state => state.data.credentials) 
-	const dispatch = useDispatch()
-	// console.log(credentials)
+
 	useEffect(()=> {
-	})
+		console.log(category)
+	},[category])
   return (
 		credentials.length !== 0 &&
 		<Fragment>
@@ -72,72 +87,100 @@ export default function InformCard(props) {
 				open={open}
 				onClose={() => setOpen(false)}
 				fullWidth
-				maxWidth="sm"
+				maxWidth="xs"
 			>
 			<DialogTitle className={classes.title}>Information</DialogTitle>
-				<DialogContent style={{backgroundColor: "var(--background)"}}>
+				<DialogContent style={{
+					backgroundColor: "var(--background)",
+					margin: ".3rem",
+    			borderRadius: "20px"}}>
 					<FormControl className={classes.container}>
-						<input 
-							type="text" 
-							value={credentials.description}
-							className={classes.input}
-							onChange={event => console.log(event.target.value)} 
-						/>
-						<Select
-							labelId="demo-simple-select-outlined-label"
-							id="demo-simple-select-outlined"
-							value={category}
-							// onChange={handleChange}
-							label="Age"
-							className={classes.input}
-						>
-							<MenuItem value={category}>
-								<em>{category}</em>
-							</MenuItem>
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
-						</Select>
-						<div onClick={()=> setOpenCalendar(true)}>
+						<section className="form-field">
+							<h3>description</h3>	
 							<input 
 								type="text" 
-								value={moment(credentials.createdAt).format('dddd MMM Do')}
+								value={credentials.description}
 								className={classes.input}
-								onChange={event => (event.target.value)}
-								disabled
-								style={{cursor: "pointer"}}
+								onChange={event => console.log(event.target.value)} 
 							/>
-						</div>
-						<Dialog
-							open={openCalendar}
-							onClose={() => setOpenCalendar(false)}
-							fullWidth
-							maxWidth="sm"
-							style={{display: "flex",justifyContent: "end"}}
-						>
-							
-							<DialogContent>
-								<Calendar
-									date={new Date()}
-									// onChange={this.handleSelect}
+						</section>
+						<section className="form-field">
+							<h3>category</h3>
+							<Select
+								labelId="demo-simple-select-outlined-label"
+								id="demo-simple-select-outlined"
+								value={credentials.category}
+								onChange={e=>setCategory(e.target.value)}
+								label="Age"
+								className={classes.input}
+							>
+								{categoryURL.filter(item=>item.title===credentials.category).map(item=>
+									<MenuItem className={classes.menu} key={item.title} value={item.title}>
+										<div className="select-menu">
+											<p>{item.title}</p>
+											<img className="select-images" src={item.url} alt="icons" />
+										</div>
+									</MenuItem>
+									)}
+								)}
+								{categoryURL.filter(item=>item.title!==credentials.category).map(item=>
+									<MenuItem className={classes.menu} key={item.title} value={item.title}>
+										<div className="select-menu">
+											<p>{item.title}</p>
+											<img className="select-images" src={item.url} alt="icons" />
+										</div>
+									</MenuItem>
+								)}
+							</Select>
+						</section>
+						<section className="form-field">
+							<h3>date</h3>
+							<div onClick={()=> setOpenCalendar(true)}>
+								<input 
+									type="text" 
+									value={moment(credentials.createdAt).format('dddd MMM Do')}
+									className={classes.input}
+									onChange={event => (event.target.value)}
+									disabled
+									style={{cursor: "pointer"}}
 								/>
-							</DialogContent>
-						</Dialog>
-						<input 
+							</div>
+							<Dialog
+								open={openCalendar}
+								onClose={() => setOpenCalendar(false)}
+								fullWidth
+								maxWidth="sm"
+								style={{display: "flex",justifyContent: "end"}}
+							>
+								<DialogContent>
+									<Calendar
+										date={new Date()}
+										// onChange={this.handleSelect}
+									/>
+								</DialogContent>
+							</Dialog>
+						</section>
+						<section className="form-field">
+							<h3>image</h3>
+							<input 
 								type="image"
 								alt="avatar"
 								src={credentials.imageUrl}
-								className={classes.input}
+								className={classes.inputImg}
 								onChange={event => (event.target.value)}
 								disabled
 								style={{cursor: "pointer"}}
 							/>
-						<input 
-							type="number" 
-							value={credentials.price}
-							className={classes.input}
-							onChange={event => (event.target.value)}
-						/>
+						</section>
+						<section className="form-field">
+							<h3>price</h3>
+							<input 
+								type="number" 
+								value={credentials.price}
+								className={classes.input}
+								onChange={event => (event.target.value)}
+							/>
+						</section>
 					</FormControl>
 				</DialogContent>
 				<DialogActions style={{backgroundColor: "var(--background)"}}>

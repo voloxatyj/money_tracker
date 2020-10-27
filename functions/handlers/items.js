@@ -96,7 +96,7 @@ exports.updateItem = (req, res) => {
 		price: req.body.price,
 		createdAt: new Date().toISOString()
 	}
-	db.doc(`/${req.user.email.split('@')[0]}/${req.params.itemId}`)
+	db.doc(`/${req.user.email.split('@')[0]}/${req.body.itemId}`)
 		.get()
 		.then(doc => {
 			if (!doc.exists) {
@@ -105,7 +105,7 @@ exports.updateItem = (req, res) => {
 				})
 			} else {
 				item.itemId = doc.id
-				db.doc(`/${req.user.email.split('@')[0]}/${req.params.itemId}`).update(item)
+				db.doc(`/${req.user.email.split('@')[0]}/${req.body.itemId}`).update(item)
 				return res.json(item)
 			}
 		})
