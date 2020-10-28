@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, Fragment } from 'react'
 import { Button } from '../components/layouts/Button'
 import { Link } from 'react-router-dom';
@@ -12,7 +11,10 @@ import { useDispatch, useSelector } from 'react-redux'
 // Material UI stuff
 import {
 	makeStyles,
+	FormControlLabel,
+	FormGroup,
 	Dialog,
+	Switch,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
@@ -58,25 +60,26 @@ const useStyles = makeStyles({
 		fontFamily: ["Architects Daughter", "cursive"].join(","),
 		background: "var(--background)",
 		color: "var(--third-color)",
-		// display: "inline-flex",
-		// alignItems: "center"
-	}
+	},
 });
 
 export default function InformCard(props) {
   const classes = useStyles();
-	const [category, setCategory] = useState('')
-	const [description, setDescription] = useState('')
-	const [createdAt, setCreatedAt] = useState('')
-	const [price, setPrice] = useState('')
-	const [profit, setProfit] = useState('')
-	const [open, setOpen] = useState(false)
-	const [openCalendar, setOpenCalendar] = useState(false)
 	const credentials = useSelector(state => state.data.credentials) 
-
-	useEffect(()=> {
-		console.log(category)
-	},[category])
+	const [description, setDescription] = useState(credentials.description)
+	const [createdAt, setCreatedAt] = useState(credentials.createdAt)
+	const [price, setPrice] = useState(credentials.price)
+	const [profit, setProfit] = useState(credentials.profit)
+	const [open, setOpen] = useState(false)
+	const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
+	const [openCalendar, setOpenCalendar] = useState(false)
+	const [category, setCategory] = useState(credentials.category)
+	const [date, setDate] = useState('')
+	const [dateTime, setDateTime] = useState(moment(createdAt).format('dddd MMM Do'))
+	console.log(typeof profit)
+	// useEffect(()=> {
+	// 	console.log(date)
+	// },[date])
   return (
 		credentials.length !== 0 &&
 		<Fragment>
@@ -99,7 +102,7 @@ export default function InformCard(props) {
 							<h3>description</h3>	
 							<input 
 								type="text" 
-								value={credentials.description}
+								value={description}
 								className={classes.input}
 								onChange={event => console.log(event.target.value)} 
 							/>
@@ -109,21 +112,20 @@ export default function InformCard(props) {
 							<Select
 								labelId="demo-simple-select-outlined-label"
 								id="demo-simple-select-outlined"
-								value={credentials.category}
+								value={category}
 								onChange={e=>setCategory(e.target.value)}
 								label="Age"
 								className={classes.input}
 							>
-								{categoryURL.filter(item=>item.title===credentials.category).map(item=>
-									<MenuItem className={classes.menu} key={item.title} value={item.title}>
+								{categoryURL.filter(item=>item.title===category).map(item=>
+									<MenuItem className={classes.menu} key={item.title} value={category}>
 										<div className="select-menu">
-											<p>{item.title}</p>
+											<p>{category}</p>
 											<img className="select-images" src={item.url} alt="icons" />
 										</div>
 									</MenuItem>
-									)}
 								)}
-								{categoryURL.filter(item=>item.title!==credentials.category).map(item=>
+								{categoryURL.filter(item=>item.title!==category).map(item=>
 									<MenuItem className={classes.menu} key={item.title} value={item.title}>
 										<div className="select-menu">
 											<p>{item.title}</p>
@@ -138,9 +140,8 @@ export default function InformCard(props) {
 							<div onClick={()=> setOpenCalendar(true)}>
 								<input 
 									type="text" 
-									value={moment(credentials.createdAt).format('dddd MMM Do')}
+									value={dateTime}
 									className={classes.input}
-									onChange={event => (event.target.value)}
 									disabled
 									style={{cursor: "pointer"}}
 								/>
@@ -155,7 +156,10 @@ export default function InformCard(props) {
 								<DialogContent>
 									<Calendar
 										date={new Date()}
-										// onChange={this.handleSelect}
+										onChange={e=>{
+											setDate(Date.parse(e)/1000)
+											setDateTime(moment(e).format('dddd MMM Do'))
+										}}
 									/>
 								</DialogContent>
 							</Dialog>
@@ -165,7 +169,7 @@ export default function InformCard(props) {
 							<input 
 								type="image"
 								alt="avatar"
-								src={credentials.imageUrl}
+								src={imageUrl}
 								className={classes.inputImg}
 								onChange={event => (event.target.value)}
 								disabled
@@ -176,10 +180,14 @@ export default function InformCard(props) {
 							<h3>price</h3>
 							<input 
 								type="number" 
-								value={credentials.price}
+								value={price}
 								className={classes.input}
 								onChange={event => (event.target.value)}
 							/>
+						</section>
+						<section className="form-field">
+							<h3>profit</h3>
+							<input type="checkbox" className="profit" />
 						</section>
 					</FormControl>
 				</DialogContent>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import firebase from 'firebase'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { logOutUser } from "../../redux/actions/userActions"
@@ -67,7 +66,6 @@ export const Card = () => {
           to="/authform"
           className="icons"
           onClick={() => {
-            // firebase.auth.signOut()
             store.dispatch(logOutUser());
           }}
         >

@@ -24,7 +24,6 @@ if (token) {
   const decodedToken = jwtDecode(token)
   if (decodedToken.exp * 1000 < Date.now()) {
     store.dispatch(logOutUser())
-    window.location.href = '/'
   }
   axios.defaults.headers.common['Authorization'] = token
   store.dispatch(getUser())
