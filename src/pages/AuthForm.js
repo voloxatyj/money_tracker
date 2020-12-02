@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import firebase from 'firebase'
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import { Button } from '../components/layouts/Button'
 import { Link, useHistory } from 'react-router-dom'
 import { loginUser, signUpUser, setAuthorizationHeader } from '../redux/actions/userActions'
-import jwtDecode from 'jwt-decode'
-
-firebase.initializeApp({
-			apiKey: "AIzaSyD5adg6COdhMVMHu3mUUq8zhhUYe3eHG2w",
-			authDomain: "make-and-save-c1e7a.firebaseapp.com"
-		})
+import { facebookAuth } from '../components/layouts/authMethods'
 
 export const AuthForm = () => {
 	const [toggleSlides, setToggleSlides] = useState(false)
@@ -25,29 +18,10 @@ export const AuthForm = () => {
 	const [seeText, setSeeText] = useState(false)
 	const [seeConfirmText, setSeeConfirmText] = useState(false)
 	const [signIn, setSignIn] = useState(false)
-	const uiConfig = {
-		signInFloe: "popup",
-		signInOptions: [
-			firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-			firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-			firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-			firebase.auth.GithubAuthProvider.PROVIDER_ID
-		],
-		callbacks: {
-			signInSuccess: () => false
-		}
-	}
 	useEffect(() => {ui.error !== null ? setErrors(ui.error) ? setErrors(signIn.code) : setErrors('') : setErrors('')}, [ui.error,signIn])
-	useEffect(()=> {
-		const unsubscribe = firebase.auth().onAuthStateChanged(user => setSignIn(user))
-		return unsubscribe
-		},[])
+
 	return (
 			<div className="containerForm">
-				<StyledFirebaseAuth
-					uiConfig={uiConfig}
-					firebaseAuth={firebase.auth()}
-				/>
 				<div className={toggleSlides ? "container right-panel-active" : "container"}>
 					<div className="form-container sign-up-container">
 						<form onSubmit={
@@ -58,30 +32,7 @@ export const AuthForm = () => {
 						}>
 							<h1>Create Account</h1> 
 							<div className="social-container">
-								<Link to="#" onClick={()=>{
-									var provider = new firebase.auth.FacebookAuthProvider();
-									provider.addScope('user_birthday');
-									firebase.auth().signInWithPopup(provider)
-										.then(function(result) {
-										// This gives you a Facebook Access Token.
-										console.log('OUTPUT: AuthForm -> token', result.credential.accessToken)
-										var token = jwtDecode(result.credential.accessToken)
-										setAuthorizationHeader({ token })
-										// The signed-in user info.
-										var user = result.user;
-										console.log('OUTPUT: AuthForm -> user', user)
-										}).catch(function(error) {
-                      console.log('OUTPUT: AuthForm -> error', error)
-											// Handle Errors here.
-											var errorCode = error.code;
-											var errorMessage = error.message;
-											// The email of the user's account used.
-											var email = error.email;
-											// The firebase.auth.AuthCredential type that was used.
-											var credential = error.credential;
-											// ...
-										});
-								}}><i className="fab fa-facebook-f"></i></Link>
+								<Link to="#" onClick={()=>facebookAuth()}><i className="fab fa-facebook-f"></i></Link>
 								<Link to="#"><i className="fab fa-google"></i></Link>
 								<Link to="#"><i className="fab fa-twitter"></i></Link>
 								<Link to="#"><i className="fab fa-github"></i></Link>
@@ -104,7 +55,7 @@ export const AuthForm = () => {
 								value={password} 
 								onChange={event=>setPassword(event.target.value)} 
 								placeholder="Password" />
-							{seeText?<i className="far fa-eye fa-lg" onClick={()=>setSeeText(true)}></i>:<i className="far fa-eye-slash fa-lg" onClick={()=>setSeeText(false)}></i>}
+							{seeText?<i className="far fa-eye fa-lg" onClick={()=>setSeeText(false)}></i>:<i className="far fa-eye-slash fa-lg" onClick={()=>setSeeText(true)}></i>}
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
 							<input 
 								type={seeConfirmText?"text":"password"} 
@@ -112,7 +63,7 @@ export const AuthForm = () => {
 								style={{marginBottom: '1.5rem'}} 
 								onChange={event=>setConfirmPassword(event.target.value)} 
 								placeholder="Confirm Password" />
-							{seeText?<span className="far fa-eye fa-lg" onClick={()=>setSeeConfirmText(false)}></span>:<span className="far fa-eye-slash fa-lg" onClick={()=>setSeeConfirmText(true)}></span>}
+							{seeConfirmText?<span className="far fa-eye fa-lg" onClick={()=>setSeeConfirmText(false)}></span>:<span className="far fa-eye-slash fa-lg" onClick={()=>setSeeConfirmText(true)}></span>}
 							{errors.confirmPassword && (<span style={{ color: 'red' }}>{errors.confirmPassword}</span>)}
 							{ui.loading ? <i className="fas fa-spinner fa-pulse fa-lg" style={{ color: "var(--main-color)", marginTop: "1em" }}></i> : <Button type="submit">Sign Up</Button>}
 						</form>
@@ -126,30 +77,7 @@ export const AuthForm = () => {
 						}>
 							<h1>Sign in</h1>
 							<div className="social-container">
-								<Link to="#" onClick={()=>{
-									var provider = new firebase.auth.FacebookAuthProvider();
-									provider.addScope('user_birthday');
-									firebase.auth().signInWithPopup(provider)
-										.then(function(result) {
-										// This gives you a Facebook Access Token.
-										console.log('OUTPUT: AuthForm -> token', result.credential.accessToken)
-										var token = jwtDecode(result.credential.accessToken)
-										setAuthorizationHeader({ token })
-										// The signed-in user info.
-										var user = result.user;
-										console.log('OUTPUT: AuthForm -> user', user)
-										}).catch(function(error) {
-                      console.log('OUTPUT: AuthForm -> error', error.code)
-											// Handle Errors here.
-											var errorCode = error.code;
-											var errorMessage = error.message;
-											// The email of the user's account used.
-											var email = error.email;
-											// The firebase.auth.AuthCredential type that was used.
-											var credential = error.credential;
-											// ...
-										});
-								}}><i className="fab fa-facebook-f"></i></Link>
+								<Link to="#" onClick={()=>facebookAuth()}><i className="fab fa-facebook-f"></i></Link>
 								{/* <Link to="#" onClick={()=>{
 									uiConfig={uiConfig}
 									firebaseAuth={firebase.auth()}

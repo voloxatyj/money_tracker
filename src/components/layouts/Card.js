@@ -12,7 +12,7 @@ import { uploadImage } from '../../redux/actions/userActions'
 export const Card = () => {
 
 	const authenticated = useSelector(state => state.user.authenticated)
-  const info = useSelector(state => state.user.info)
+  const info = useSelector(state => state.user.info.userCredentials)
   const dispatch = useDispatch()
 
   const handleImageChange = event => {

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Button } from '../components/layouts/Button'
 import { Link } from 'react-router-dom';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { Calendar } from 'react-date-range'
 import moment from 'moment'
-import categoryURL from './layouts/categoryURL'
+import categoryURL from '../utils/categoryURL'
 // Redux
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 // Material UI stuff
 import {
 	makeStyles,
@@ -76,10 +76,6 @@ export default function InformCard(props) {
 	const [category, setCategory] = useState(credentials.category)
 	const [date, setDate] = useState('')
 	const [dateTime, setDateTime] = useState(moment(createdAt).format('dddd MMM Do'))
-	console.log(typeof profit)
-	// useEffect(()=> {
-	// 	console.log(date)
-	// },[date])
   return (
 		credentials.length !== 0 &&
 		<Fragment>
