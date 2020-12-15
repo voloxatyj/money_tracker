@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { SET_ITEM } from '../redux/types'
+import { ADD_ITEM, SET_ITEM } from '../redux/types'
 import moment from 'moment'
 import { Button } from '../components/layouts/Button'
 import { 
@@ -139,19 +139,23 @@ export const StickyHeadTable = () => {
     setPage(0);
   };
 
-  function* formatDate(state) {
-  yield state.map(item=>item.createdAt=moment(item.createdAt).format("DD/MM/YYYY"))
-  yield state.map(item=>item.createdAt=moment(item.createdAt).format("DD-MM-YYYY hh:mm:ss"))
-  yield state.map(item=>item.createdAt=moment(item.createdAt).format("dddd of MMMM"))
-  yield state.map(item=>item.createdAt=moment(item.createdAt).fromNow())
-}
+//   function* formatDate(state) {
+//   yield state.map(item=>item.createdAt=moment(item.createdAt).format("DD/MM/YYYY"))
+//   yield state.map(item=>item.createdAt=moment(item.createdAt).format("DD-MM-YYYY hh:mm:ss"))
+//   yield state.map(item=>item.createdAt=moment(item.createdAt).format("dddd of MMMM"))
+//   yield state.map(item=>item.createdAt=moment(item.createdAt).fromNow())
+// }
 
   return (
     <>
       <AppBar position="static" className={classes.bar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.search}>
-            <Button className={classes.button}>
+            <Button className={classes.button}
+              onClick={(e)=>{
+                setToolBtn(true)
+                dispatch({type: ADD_ITEM, payload: {createdAt: Date.now(), open: true}})
+                }}>
               Add
               <i
                 className="fas fa-plus-circle"

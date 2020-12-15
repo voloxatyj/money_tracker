@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '../components/layouts/Button'
 import { Link, useHistory } from 'react-router-dom'
 import { loginUser, signUpUser, setAuthorizationHeader } from '../redux/actions/userActions'
-import { facebookAuth } from '../components/layouts/authMethods'
+import { Auth } from '../components/layouts/authMethods'
 
 export const AuthForm = () => {
 	const [toggleSlides, setToggleSlides] = useState(false)
@@ -32,10 +32,10 @@ export const AuthForm = () => {
 						}>
 							<h1>Create Account</h1> 
 							<div className="social-container">
-								<Link to="#" onClick={()=>facebookAuth()}><i className="fab fa-facebook-f"></i></Link>
-								<Link to="#"><i className="fab fa-google"></i></Link>
-								<Link to="#"><i className="fab fa-twitter"></i></Link>
-								<Link to="#"><i className="fab fa-github"></i></Link>
+								<Link to="#" onClick={()=>Auth('facebook',history)}><i className="fab fa-facebook-f"></i></Link>
+								<Link to="#" onClick={()=>Auth('google',history)}><i className="fab fa-google"></i></Link>
+								<Link to="#" onClick={()=>Auth('twitter',history)}><i className="fab fa-twitter"></i></Link>
+								<Link to="#" onClick={()=>Auth('github',history)}><i className="fab fa-github"></i></Link>
 							</div>
 							{errors.general && (<span style={{ color: 'red', fontSize: '1.5rem' }}>{errors.account}</span>)}
 							<input 
@@ -77,19 +77,10 @@ export const AuthForm = () => {
 						}>
 							<h1>Sign in</h1>
 							<div className="social-container">
-								<Link to="#" onClick={()=>facebookAuth()}><i className="fab fa-facebook-f"></i></Link>
-								{/* <Link to="#" onClick={()=>{
-									uiConfig={uiConfig}
-									firebaseAuth={firebase.auth()}
-								}}><i className="fab fa-google"></i></Link>
-								<Link to="#" onClick={()=>{
-									uiConfig={uiConfig}
-									firebaseAuth={firebase.auth()}
-								}}><i className="fab fa-twitter"></i></Link>
-								<Link to="#" onClick={()=>{
-									uiConfig={uiConfig}
-									firebaseAuth={firebase.auth()}
-								}}><i className="fab fa-github"></i></Link> */}
+								<Link to="#" onClick={()=>Auth('facebook',history)}><i className="fab fa-facebook-f"></i></Link>
+								<Link to="#" onClick={()=>Auth('google',history)}><i className="fab fa-google"></i></Link>
+								<Link to="#" onClick={()=>Auth('twitter',history)}><i className="fab fa-twitter"></i></Link>
+								<Link to="#" onClick={()=>Auth('github',history)}><i className="fab fa-github"></i></Link>
 							</div>
 							{errors.general && (<span style={{ color: 'red', fontSize: '1.5rem' }}>{errors.general}</span>)}
 							<input 

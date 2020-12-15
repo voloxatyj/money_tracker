@@ -6,8 +6,10 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { Calendar } from 'react-date-range'
 import moment from 'moment'
 import categoryURL from '../utils/categoryURL'
+import { CLOSE_ITEM, OPEN_ITEM } from '../redux/types'
+import { addItem, updateItem } from '../redux/actions/dataActions'
 // Redux
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // Material UI stuff
 import {
 	makeStyles,
@@ -60,31 +62,32 @@ const useStyles = makeStyles({
 		fontFamily: ["Architects Daughter", "cursive"].join(","),
 		background: "var(--background)",
 		color: "var(--third-color)",
-	},
+	}
 });
 
-export default function InformCard(props) {
-  const classes = useStyles();
-	const credentials = useSelector(state => state.data.credentials) 
-	const [description, setDescription] = useState(credentials.description)
-	const [createdAt, setCreatedAt] = useState(credentials.createdAt)
-	const [price, setPrice] = useState(credentials.price)
-	const [profit, setProfit] = useState(credentials.profit)
-	const [open, setOpen] = useState(false)
-	const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
+export default function InformCard() {
+	const classes = useStyles()
+	const credentials = useSelector(state => state.data.credentials,()=>{})
+	const openView = useSelector(state => state.data.openView)
+	const itemId = useSelector(state => state.data.credentials.itemId)
+	const dispatch = useDispatch()
 	const [openCalendar, setOpenCalendar] = useState(false)
+  const [description, setDescription] = useState(credentials.description) 
 	const [category, setCategory] = useState(credentials.category)
-	const [date, setDate] = useState('')
-	const [dateTime, setDateTime] = useState(moment(createdAt).format('dddd MMM Do'))
+	const [createdAt, setCreatedAt] = useState(moment(credentials.createdAt).format('dddd MMM Do'))
+	const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
+	const [profit, setProfit] = useState(credentials.profit)
+	const [price, setPrice] = useState(credentials.price)
+
   return (
 		credentials.length !== 0 &&
 		<Fragment>
-			<Link to="#" onClick={()=>setOpen(true)} className="animate__animated animate__flipInX animate__delay-.5s">
+			<Link to="#" onClick={()=>dispatch({type: OPEN_ITEM})} className="animate__animated animate__flipInX animate__delay-.5s">
         <i className="fas fa-info fa-2x"></i>
       </Link>
 			<Dialog
-				open={open}
-				onClose={() => setOpen(false)}
+				open={openView}
+				onClose={() =>dispatch({type: CLOSE_ITEM})}
 				fullWidth
 				maxWidth="xs"
 			>
@@ -99,8 +102,9 @@ export default function InformCard(props) {
 							<input 
 								type="text" 
 								value={description}
+								name="description"
 								className={classes.input}
-								onChange={event => console.log(event.target.value)} 
+								onChange={e=>setDescription(e.target.value)} 
 							/>
 						</section>
 						<section className="form-field">
@@ -109,7 +113,8 @@ export default function InformCard(props) {
 								labelId="demo-simple-select-outlined-label"
 								id="demo-simple-select-outlined"
 								value={category}
-								onChange={e=>setCategory(e.target.value)}
+								name="category"
+								onChange={e=>setCategory(e.target.value)} 
 								label="Age"
 								className={classes.input}
 							>
@@ -133,18 +138,19 @@ export default function InformCard(props) {
 						</section>
 						<section className="form-field">
 							<h3>date</h3>
-							<div onClick={()=> setOpenCalendar(true)}>
+							<div onClick={()=>setOpenCalendar(true)}>
 								<input 
 									type="text" 
-									value={dateTime}
+									value={createdAt}
 									className={classes.input}
+									name="date"
 									disabled
 									style={{cursor: "pointer"}}
 								/>
 							</div>
 							<Dialog
 								open={openCalendar}
-								onClose={() => setOpenCalendar(false)}
+								onClose={()=>setOpenCalendar(false)}
 								fullWidth
 								maxWidth="sm"
 								style={{display: "flex",justifyContent: "end"}}
@@ -153,8 +159,8 @@ export default function InformCard(props) {
 									<Calendar
 										date={new Date()}
 										onChange={e=>{
-											setDate(Date.parse(e)/1000)
-											setDateTime(moment(e).format('dddd MMM Do'))
+											// setDate(Date.parse(e)/1000)
+											setCreatedAt(moment(e).format('dddd MMM Do'))
 										}}
 									/>
 								</DialogContent>
@@ -165,39 +171,35 @@ export default function InformCard(props) {
 							<input 
 								type="image"
 								alt="avatar"
+								name="imageUrl"
 								src={imageUrl}
 								className={classes.inputImg}
-								onChange={event => (event.target.value)}
+								// onChange={} 
 								disabled
 								style={{cursor: "pointer"}}
 							/>
 						</section>
-						<section className="form-field">
+						<section className="form-field" name="price">
 							<h3>price</h3>
 							<input 
 								type="number" 
 								value={price}
 								className={classes.input}
-								onChange={event => (event.target.value)}
+								onChange={e=>setPrice(e.target.value)} 
 							/>
 						</section>
-						<section className="form-field">
+						<section className="form-field" name="profit">
 							<h3>profit</h3>
-							<input type="checkbox" className="profit" />
+							<input type="checkbox" className="profit" onChange={e=>setProfit(e.target.value)} />
 						</section>
 					</FormControl>
 				</DialogContent>
 				<DialogActions style={{backgroundColor: "var(--background)"}}>
-					<Button onClick={() => setOpen(false)} color="primary">Cancel</Button>
+					<Button onClick={() =>dispatch({type: CLOSE_ITEM}) } color="primary">Cancel</Button>
 					<Button onClick={(e) => {
 						e.preventDefault()
-						const userDetails = {
-							// bio,
-							// website,
-							// location
-						}
-						// dispatch(editUserDetails(userDetails))
-						setOpen(false)
+						dispatch(updateItem({description, category, imageUrl, price, profit, createdAt, itemId}))
+						dispatch({type: CLOSE_ITEM})	
 					}} color="primary">Save</Button>
 				</DialogActions>
 			</Dialog>

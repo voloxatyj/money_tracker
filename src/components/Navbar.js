@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { NavbarLogo } from './layouts/NavbarLogo'
+import { logOutUser } from '../redux/actions/userActions'
 
 export const Navbar = () => {
 	

@@ -91,11 +91,12 @@ exports.updateItem = (req, res) => {
 	const item = {
 		category: req.body.category,
 		description: req.body.description,
-		type: req.body.type,
-		image: req.body.image || '',
+		imageUrl: req.body.imageUrl || '',
 		price: req.body.price,
-		createdAt: new Date().toISOString()
+		createdAt: req.body.createdAt || new Date().toISOString(),
+		profit: req.body.profit || false
 	}
+    console.log('OUTPUT ~ file: items.js ~ line 99 ~ req.body', req.body)
 	db.doc(`/${req.user.email.split('@')[0]}/${req.body.itemId}`)
 		.get()
 		.then(doc => {

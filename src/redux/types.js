@@ -11,3 +11,6 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 // DATA reducer types
 export const LOADING_DATA = 'LOADING_DATA'
 export const SET_ITEM = 'SET_ITEM'
+export const ADD_ITEM = 'ADD_ITEM'
+export const CLOSE_ITEM = 'CLOSE_ITEM'
+export const OPEN_ITEM = 'OPEN_ITEM'

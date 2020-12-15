@@ -28,7 +28,6 @@ export const loginUser = (userData, history) => dispatch => {
 }
 
 export const getUser = () => dispatch => {
-	// axios.defaults.headers.common['Authorization'] = localStorage.getItem('DBAuthToken') || undefined
 	dispatch({ type: LOADING_UI })
 		axios.get('/user')
 			.then(res => {

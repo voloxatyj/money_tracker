@@ -20,6 +20,7 @@ app.post('/login', login)
 app.post('/user/uploadImage', DBAuth, uploadImage)
 app.get('/user', DBAuth, (req,res) => {
 	let item = {}
+	console.log(req.user.email)
 	db.doc(`/${req.user.email.split('@')[0]}/mainInfo`)
 		.get()
 		.then(doc => {

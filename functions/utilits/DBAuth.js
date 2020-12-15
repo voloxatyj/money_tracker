@@ -1,5 +1,6 @@
 const { admin } = require('./config')
 const jwt = require('jsonwebtoken')
+const { secretKey } = require('../../src/utils/config')
 
 module.exports = (req, res, next) => {
 	let idToken
