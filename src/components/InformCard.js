@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Button } from '../components/layouts/Button'
 import { Link } from 'react-router-dom';
 import 'react-date-range/dist/styles.css'; // main style file
@@ -13,10 +13,7 @@ import { useSelector, useDispatch } from 'react-redux'
 // Material UI stuff
 import {
 	makeStyles,
-	FormControlLabel,
-	FormGroup,
 	Dialog,
-	Switch,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
@@ -24,7 +21,6 @@ import {
 	MenuItem,
 	FormControl
 	} from '@material-ui/core'
-import { Category } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
@@ -67,18 +63,29 @@ const useStyles = makeStyles({
 
 export default function InformCard() {
 	const classes = useStyles()
-	const credentials = useSelector(state => state.data.credentials,()=>{})
+	const credentials = useSelector(state => state.data.credentials)
 	const openView = useSelector(state => state.data.openView)
 	const itemId = useSelector(state => state.data.credentials.itemId)
 	const dispatch = useDispatch()
 	const [openCalendar, setOpenCalendar] = useState(false)
-  const [description, setDescription] = useState(credentials.description) 
-	const [category, setCategory] = useState(credentials.category)
-	const [createdAt, setCreatedAt] = useState(moment(credentials.createdAt).format('dddd MMM Do'))
-	const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
-	const [profit, setProfit] = useState(credentials.profit)
-	const [price, setPrice] = useState(credentials.price)
-
+  const [description, setDescription] = useState('' || credentials.description) 
+  console.log('OUTPUT ~ file: InformCard.js ~ line 72 ~ InformCard ~ description', description)
+	const [category, setCategory] = useState('' || credentials.category)
+  console.log('OUTPUT ~ file: InformCard.js ~ line 73 ~ InformCard ~ category', category)
+	const [createdAt, setCreatedAt] = useState('' || credentials.createdAt)	
+	const [imageUrl, setImageUrl] = useState('' || credentials.imageUrl)
+	const [profit, setProfit] = useState(false || credentials.profit)
+	const [price, setPrice] = useState('' || credentials.price)
+	
+	useEffect(() => {
+		setDescription(credentials.description)
+		setCategory(credentials.category)
+		setCreatedAt(credentials.createdAt)
+		setImageUrl(credentials.imageUrl)
+		setProfit(credentials.profi)
+		setPrice(credentials.price)
+	}, [credentials])
+	
   return (
 		credentials.length !== 0 &&
 		<Fragment>
@@ -118,7 +125,7 @@ export default function InformCard() {
 								label="Age"
 								className={classes.input}
 							>
-								{categoryURL.filter(item=>item.title===category).map(item=>
+								{categoryURL.filter(item=>item.title === category).map(item=>
 									<MenuItem className={classes.menu} key={item.title} value={category}>
 										<div className="select-menu">
 											<p>{category}</p>
@@ -126,7 +133,7 @@ export default function InformCard() {
 										</div>
 									</MenuItem>
 								)}
-								{categoryURL.filter(item=>item.title!==category).map(item=>
+								{categoryURL.filter(item=>item.title !== category).map(item=>
 									<MenuItem className={classes.menu} key={item.title} value={item.title}>
 										<div className="select-menu">
 											<p>{item.title}</p>
@@ -141,7 +148,7 @@ export default function InformCard() {
 							<div onClick={()=>setOpenCalendar(true)}>
 								<input 
 									type="text" 
-									value={createdAt}
+									value={moment(createdAt).format('dddd MMM Do')}
 									className={classes.input}
 									name="date"
 									disabled
@@ -159,8 +166,7 @@ export default function InformCard() {
 									<Calendar
 										date={new Date()}
 										onChange={e=>{
-											// setDate(Date.parse(e)/1000)
-											setCreatedAt(moment(e).format('dddd MMM Do'))
+											setCreatedAt(Date.parse(e)/1000)
 										}}
 									/>
 								</DialogContent>
@@ -198,8 +204,7 @@ export default function InformCard() {
 					<Button onClick={() =>dispatch({type: CLOSE_ITEM}) } color="primary">Cancel</Button>
 					<Button onClick={(e) => {
 						e.preventDefault()
-						dispatch(updateItem({description, category, imageUrl, price, profit, createdAt, itemId}))
-						dispatch({type: CLOSE_ITEM})	
+						dispatch(updateItem({description, category, imageUrl, price, profit, createdAt}, itemId))
 					}} color="primary">Save</Button>
 				</DialogActions>
 			</Dialog>

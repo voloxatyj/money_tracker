@@ -1,4 +1,4 @@
-import { LOADING_DATA, SET_ITEM, ADD_ITEM, CLOSE_ITEM, OPEN_ITEM } from "../types";
+import { LOADING_DATA, SET_ITEM, ADD_ITEM, CLOSE_ITEM, OPEN_ITEM, UPDATE_DATA } from "../types";
 
 const initialState = {
   data: [],
@@ -12,6 +12,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
         data: action.payload.filter(item=>!item.email),
+      };
+    case UPDATE_DATA:
+      const index = state.data.findIndex(item=>item.itemId === action.payload.itemId)
+      state.data[index] = action.payload
+      return {
+        ...state,
+        data: state.data,
+        credentials: action.payload,
+        openView: false
       };
     case SET_ITEM: 
       return {

@@ -1,4 +1,4 @@
-import { LOADING_DATA, SET_ERRORS } from "../types";
+import { LOADING_DATA, SET_ITEM, UPDATE_DATA } from "../types";
 import axios from "axios";
 
 export const getData = () => dispatch => {
@@ -16,7 +16,7 @@ export const getData = () => dispatch => {
 export const addItem = item => dispatch => {
   axios
     .post('/item')
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: LOADING_DATA,
         payload: res.data,
@@ -25,12 +25,16 @@ export const addItem = item => dispatch => {
     .catch((err) => console.log(err));
 }
 
-export const updateItem = item => dispatch => {
+export const updateItem = (item, itemId) => dispatch => {
   axios
-    .post(`/item/${item.itemId}`)
-    .then((res) => {
+    .post(`/item/${itemId}`, item)
+    .then(res => {
       dispatch({
-        type: LOADING_DATA,
+        type: UPDATE_DATA,
+        payload: res.data,
+      });
+      dispatch({
+        type: SET_ITEM,
         payload: res.data,
       });
     })

@@ -21,6 +21,7 @@ exports.getItems = (req, res) => {
 					itemId: doc.data().itemId,
 					email: doc.data().email
 				})
+				console.log(doc.data().createdAt)
 			})
 			return res.json(items)
 		})
@@ -88,16 +89,7 @@ exports.getItem = (req, res) => {
 }
 // update item
 exports.updateItem = (req, res) => {
-	const item = {
-		category: req.body.category,
-		description: req.body.description,
-		imageUrl: req.body.imageUrl || '',
-		price: req.body.price,
-		createdAt: req.body.createdAt || new Date().toISOString(),
-		profit: req.body.profit || false
-	}
-    console.log('OUTPUT ~ file: items.js ~ line 99 ~ req.body', req.body)
-	db.doc(`/${req.user.email.split('@')[0]}/${req.body.itemId}`)
+	db.doc(`/${req.user.email.split('@')[0]}/${req.params.itemId}`)
 		.get()
 		.then(doc => {
 			if (!doc.exists) {
@@ -105,8 +97,17 @@ exports.updateItem = (req, res) => {
 					error: 'item not found'
 				})
 			} else {
-				item.itemId = doc.id
-				db.doc(`/${req.user.email.split('@')[0]}/${req.body.itemId}`).update(item)
+				const data = doc.data()
+					const item = {
+						category: req.body.category || data.category,
+						description: req.body.description || data.description,
+						imageUrl: req.body.imageUrl || data.imageUrl,
+						price: req.body.price || data.price,
+						createdAt: req.body.createdAt || data.createdAt,
+						profit: req.body.profit || data.profit,
+						itemId: doc.id
+					}
+				db.doc(`/${req.user.email.split('@')[0]}/${req.params.itemId}`).update(item)
 				return res.json(item)
 			}
 		})

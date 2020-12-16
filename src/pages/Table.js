@@ -126,6 +126,7 @@ export const StickyHeadTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const state = useSelector(state => state.data.data)
+  const credentials = useSelector(state => state.data.credentials)
   const [id, setId] = useState(null)
   const [toolBtn, setToolBtn] = useState(false)
   const dispatch = useDispatch()
