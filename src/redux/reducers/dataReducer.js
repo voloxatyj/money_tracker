@@ -1,8 +1,9 @@
-import { LOADING_DATA, SET_ITEM, ADD_ITEM, CLOSE_ITEM, OPEN_ITEM, UPDATE_DATA } from "../types";
+import { LOADING_DATA, SET_ITEM, ADD_ITEM, CLOSE_ITEM, OPEN_ITEM, UPDATE_DATA, DELETE_ITEM, FILTER_DATA } from "../types";
+import categoryURL from '../../utils/categoryURL'
 
 const initialState = {
   data: [],
-  credentials: [],
+  credentials: {},
   openView: false
 };
 
@@ -15,12 +16,21 @@ export default function (state = initialState, action) {
       };
     case UPDATE_DATA:
       const index = state.data.findIndex(item=>item.itemId === action.payload.itemId)
-      state.data[index] = action.payload
+      if(index === -1) {
+        state.data.push(action.payload)
+      } else {
+        state.data[index] = action.payload
+      }
       return {
         ...state,
-        data: state.data,
         credentials: action.payload,
         openView: false
+      };
+    case FILTER_DATA:
+      const  newData = state.data.filter(item=>item.description.toLowerCase().startsWith(action.payload))
+      return {
+        ...state,
+        data: newData,
       };
     case SET_ITEM: 
       return {
@@ -30,8 +40,15 @@ export default function (state = initialState, action) {
     case ADD_ITEM: 
       return {
         ...state,
-        credentials: action.payload.createdAt,
-        openView: action.payload.open
+        credentials: {
+          description: '', 
+          category: categoryURL[0].title, 
+          imageUrl: categoryURL[0].url, 
+          price: '', 
+          profit: false, 
+          createdAt: Date.now(),
+        },
+        openView: action.payload
       }
     case OPEN_ITEM: 
       return {
@@ -42,6 +59,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         openView: false
+      }
+    case DELETE_ITEM: 
+      const result = state.data.filter(item=>item.itemId !== action.payload)
+      return {
+        ...state,
+        data: result
       }
     default:
       return state;

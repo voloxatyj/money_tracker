@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ADD_ITEM, SET_ITEM } from '../redux/types'
+import { ADD_ITEM, FILTER_DATA, SET_ITEM } from '../redux/types'
 import moment from 'moment'
 import { Button } from '../components/layouts/Button'
 import { 
@@ -20,6 +20,7 @@ import {
  } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import Informcard from '../components/InformCard'
+import { deleteItem, getData } from '../redux/actions/dataActions'
 
 const useStyles = makeStyles({
   root: {
@@ -113,12 +114,6 @@ const useStyles = makeStyles({
   addTable: {
     backgroundColor: 'var(--background)'
   },
-  input: {
-    width: "60%",
-    display: "flex",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
 });
 
 export const StickyHeadTable = () => {
@@ -130,22 +125,21 @@ export const StickyHeadTable = () => {
   const [id, setId] = useState(null)
   const [toolBtn, setToolBtn] = useState(false)
   const dispatch = useDispatch()
-
+  const [value, setValue] = useState()
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  console.log(state.filter(item=>item.profit === false).reduce((acc,next)=>acc+=Number(next.price),0))
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
-//   function* formatDate(state) {
-//   yield state.map(item=>item.createdAt=moment(item.createdAt).format("DD/MM/YYYY"))
-//   yield state.map(item=>item.createdAt=moment(item.createdAt).format("DD-MM-YYYY hh:mm:ss"))
-//   yield state.map(item=>item.createdAt=moment(item.createdAt).format("dddd of MMMM"))
-//   yield state.map(item=>item.createdAt=moment(item.createdAt).fromNow())
-// }
+  useEffect(()=>{
+    if(value === '') {
+      dispatch(getData())
+    }
+  },[value])
 
   return (
     <>
@@ -155,7 +149,7 @@ export const StickyHeadTable = () => {
             <Button className={classes.button}
               onClick={(e)=>{
                 setToolBtn(true)
-                dispatch({type: ADD_ITEM, payload: {createdAt: Date.now(), open: true}})
+                dispatch({type: ADD_ITEM, payload: true})
                 }}>
               Add
               <i
@@ -175,11 +169,15 @@ export const StickyHeadTable = () => {
                   input: classes.inputInput,
                 }}
                 inputProps={{ "aria-label": "search" }}
+                onChange={(e)=>{
+                  dispatch({type: FILTER_DATA, payload: e.target.value})
+                  setValue(e.target.value)
+                }}
               />
             </div>
           </div>
           <Typography className={classes.balance} variant="h5" noWrap>
-            balance:
+            {`balance:${state?state.filter(item=>item.profit === true).reduce((acc,next)=>acc+=Number(next.price),0) - state.filter(item=>item.profit === false).reduce((acc,next)=>acc+=Number(next.price),0):null}`}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -205,7 +203,7 @@ export const StickyHeadTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {state
+              {state !== undefined ? state
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(item => 
                     <TableRow
@@ -239,19 +237,22 @@ export const StickyHeadTable = () => {
                       </TableCell>
                       <TableCell className="tools">
                         {toolBtn && id === item.itemId &&
-                        <Link to="#" id="recycle" className="animate__animated animate__flipInX animate__delay-.5s">
+                        <Link to="#" 
+                        className="animate__animated animate__flipInX animate__delay-.5s"
+                        onClick={()=>dispatch(deleteItem(item.itemId))}
+                        >
                           <i className="fas fa-recycle fa-2x"></i>
                         </Link>}
                       </TableCell>
                     </TableRow>
-                  )}
+                  ) : null}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={state.length}
+          count={state === undefined ? 0 : state.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

@@ -3,7 +3,7 @@ const {
 	config
 } = require('../utilits/config')
 
-const category = require('../utilits/category')
+// const category = require('../utilits/category')
 
 // get all items
 exports.getItems = (req, res) => {
@@ -39,22 +39,19 @@ exports.addItem = (req, res) => {
 		return res.status(400).json({
 			error: 'Method not allowed'
 		})
-	}
-
-	const image = category.find((item) => item.title === req.body.category);
-
+	} 
 	const item = {
 		category: req.body.category,
 		description: req.body.description,
-		type: req.body.type,
-		imageUrl: image.url,
+		profit: req.body.profit,
+		imageUrl: req.body.imageUrl,
 		price: req.body.price,
-		createdAt: new Date().toISOString(),
+		createdAt: req.body.createdAt || new Date().toISOString(),
 	}
-
 	db.collection(`${req.user.email.split('@')[0]}`).add(item)
 		.then(doc => {
 			item.itemId = doc.id
+			db.doc(`/${req.user.email.split('@')[0]}/${doc.id}`).update(item)
 			return res.json(item)
 		})
 		.catch(err => {

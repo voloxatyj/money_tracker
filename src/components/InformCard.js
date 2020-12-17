@@ -68,21 +68,19 @@ export default function InformCard() {
 	const itemId = useSelector(state => state.data.credentials.itemId)
 	const dispatch = useDispatch()
 	const [openCalendar, setOpenCalendar] = useState(false)
-  const [description, setDescription] = useState('' || credentials.description) 
-  console.log('OUTPUT ~ file: InformCard.js ~ line 72 ~ InformCard ~ description', description)
-	const [category, setCategory] = useState('' || credentials.category)
-  console.log('OUTPUT ~ file: InformCard.js ~ line 73 ~ InformCard ~ category', category)
-	const [createdAt, setCreatedAt] = useState('' || credentials.createdAt)	
-	const [imageUrl, setImageUrl] = useState('' || credentials.imageUrl)
-	const [profit, setProfit] = useState(false || credentials.profit)
-	const [price, setPrice] = useState('' || credentials.price)
-	
+  const [description, setDescription] = useState(credentials.description) 
+	const [category, setCategory] = useState(credentials.category)
+	const [createdAt, setCreatedAt] = useState(credentials.createdAt)	
+	const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
+	const [profit, setProfit] = useState(credentials.profit)
+	const [price, setPrice] = useState(credentials.price)
+	console.log(new Date(), createdAt)
 	useEffect(() => {
 		setDescription(credentials.description)
 		setCategory(credentials.category)
 		setCreatedAt(credentials.createdAt)
 		setImageUrl(credentials.imageUrl)
-		setProfit(credentials.profi)
+		setProfit(credentials.profit)
 		setPrice(credentials.price)
 	}, [credentials])
 	
@@ -164,9 +162,9 @@ export default function InformCard() {
 							>
 								<DialogContent>
 									<Calendar
-										date={new Date()}
+										date={moment.utc(createdAt).toDate()}
 										onChange={e=>{
-											setCreatedAt(Date.parse(e)/1000)
+											setCreatedAt(e)
 										}}
 									/>
 								</DialogContent>
@@ -180,7 +178,6 @@ export default function InformCard() {
 								name="imageUrl"
 								src={imageUrl}
 								className={classes.inputImg}
-								// onChange={} 
 								disabled
 								style={{cursor: "pointer"}}
 							/>
@@ -204,7 +201,13 @@ export default function InformCard() {
 					<Button onClick={() =>dispatch({type: CLOSE_ITEM}) } color="primary">Cancel</Button>
 					<Button onClick={(e) => {
 						e.preventDefault()
-						dispatch(updateItem({description, category, imageUrl, price, profit, createdAt}, itemId))
+						if(itemId === undefined){
+							setCreatedAt(Date.parse(createdAt)/1000)
+							dispatch(addItem({description, category, imageUrl, price, profit, createdAt}))
+							
+						} else {
+							dispatch(updateItem({description, category, imageUrl, price, profit, createdAt}, itemId))
+						}
 					}} color="primary">Save</Button>
 				</DialogActions>
 			</Dialog>

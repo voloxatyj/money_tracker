@@ -1,4 +1,4 @@
-import { LOADING_DATA, SET_ITEM, UPDATE_DATA } from "../types";
+import { LOADING_DATA, UPDATE_DATA, DELETE_ITEM } from "../types";
 import axios from "axios";
 
 export const getData = () => dispatch => {
@@ -15,10 +15,10 @@ export const getData = () => dispatch => {
 
 export const addItem = item => dispatch => {
   axios
-    .post('/item')
+    .post('/item', item)
     .then(res => {
       dispatch({
-        type: LOADING_DATA,
+        type: UPDATE_DATA,
         payload: res.data,
       });
     })
@@ -33,9 +33,17 @@ export const updateItem = (item, itemId) => dispatch => {
         type: UPDATE_DATA,
         payload: res.data,
       });
+    })
+    .catch((err) => console.log(err));
+}
+
+export const deleteItem = (itemId) => dispatch => {
+  axios
+    .delete(`/item/${itemId}`)
+    .then(() => {
       dispatch({
-        type: SET_ITEM,
-        payload: res.data,
+        type: DELETE_ITEM,
+        payload: itemId,
       });
     })
     .catch((err) => console.log(err));
