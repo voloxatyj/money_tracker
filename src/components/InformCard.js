@@ -68,22 +68,30 @@ export default function InformCard() {
 	const itemId = useSelector(state => state.data.credentials.itemId)
 	const dispatch = useDispatch()
 	const [openCalendar, setOpenCalendar] = useState(false)
-  const [description, setDescription] = useState(credentials.description) 
-	const [category, setCategory] = useState(credentials.category)
-	const [createdAt, setCreatedAt] = useState(credentials.createdAt)	
-	const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
-	const [profit, setProfit] = useState(credentials.profit)
-	const [price, setPrice] = useState(credentials.price)
-	console.log(new Date(), createdAt)
+  // const [description, setDescription] = useState(credentials.description) 
+	// const [category, setCategory] = useState(credentials.category)
+	// const [createdAt, setCreatedAt] = useState(credentials.createdAt)	
+	// const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
+	// const [profit, setProfit] = useState(credentials.profit)
+	// const [price, setPrice] = useState(credentials.price)
+	const [form, setForm] = useState({
+		description: credentials.description, 
+		category: credentials.category,
+		createdAt: credentials.createdAt,
+		imageUrl: credentials.imageUrl,
+		profit: credentials.profit,
+		price: credentials.price
+	})
+
 	useEffect(() => {
-		setDescription(credentials.description)
-		setCategory(credentials.category)
-		setCreatedAt(credentials.createdAt)
-		setImageUrl(credentials.imageUrl)
-		setProfit(credentials.profit)
-		setPrice(credentials.price)
+		// setDescription(credentials.description)
+		// setCategory(credentials.category)
+		// setCreatedAt(credentials.createdAt)
+		// setImageUrl(credentials.imageUrl)
+		// setProfit(credentials.profit)
+		// setPrice(credentials.price)
 	}, [credentials])
-	
+
   return (
 		credentials.length !== 0 &&
 		<Fragment>
@@ -106,10 +114,10 @@ export default function InformCard() {
 							<h3>description</h3>	
 							<input 
 								type="text" 
-								value={description}
+								value={form.description}
 								name="description"
 								className={classes.input}
-								onChange={e=>setDescription(e.target.value)} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 							/>
 						</section>
 						<section className="form-field">
@@ -117,21 +125,21 @@ export default function InformCard() {
 							<Select
 								labelId="demo-simple-select-outlined-label"
 								id="demo-simple-select-outlined"
-								value={category}
+								value={form.category}
 								name="category"
-								onChange={e=>setCategory(e.target.value)} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 								label="Age"
 								className={classes.input}
 							>
-								{categoryURL.filter(item=>item.title === category).map(item=>
-									<MenuItem className={classes.menu} key={item.title} value={category}>
+								{categoryURL.filter(item=>item.title === form.category).map(item=>
+									<MenuItem className={classes.menu} key={item.title} value={form.category}>
 										<div className="select-menu">
-											<p>{category}</p>
+											<p>{form.category}</p>
 											<img className="select-images" src={item.url} alt="icons" />
 										</div>
 									</MenuItem>
 								)}
-								{categoryURL.filter(item=>item.title !== category).map(item=>
+								{categoryURL.filter(item=>item.title !== form.category).map(item=>
 									<MenuItem className={classes.menu} key={item.title} value={item.title}>
 										<div className="select-menu">
 											<p>{item.title}</p>
@@ -146,9 +154,9 @@ export default function InformCard() {
 							<div onClick={()=>setOpenCalendar(true)}>
 								<input 
 									type="text" 
-									value={moment(createdAt).format('dddd MMM Do')}
+									value={moment(form.createdAt).format('dddd MMM Do')}
 									className={classes.input}
-									name="date"
+									name="createdAt"
 									disabled
 									style={{cursor: "pointer"}}
 								/>
@@ -162,10 +170,8 @@ export default function InformCard() {
 							>
 								<DialogContent>
 									<Calendar
-										date={moment.utc(createdAt).toDate()}
-										onChange={e=>{
-											setCreatedAt(e)
-										}}
+										date={moment.utc(form.createdAt).toDate()}
+										onChange={event=>setForm({...form, createdAt: event })}
 									/>
 								</DialogContent>
 							</Dialog>
@@ -176,7 +182,7 @@ export default function InformCard() {
 								type="image"
 								alt="avatar"
 								name="imageUrl"
-								src={imageUrl}
+								src={form.imageUrl}
 								className={classes.inputImg}
 								disabled
 								style={{cursor: "pointer"}}
@@ -185,15 +191,16 @@ export default function InformCard() {
 						<section className="form-field" name="price">
 							<h3>price</h3>
 							<input 
-								type="number" 
-								value={price}
+								type="number"
+								name="price" 
+								value={form.price}
 								className={classes.input}
-								onChange={e=>setPrice(e.target.value)} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 							/>
 						</section>
 						<section className="form-field" name="profit">
 							<h3>profit</h3>
-							<input type="checkbox" className="profit" onChange={e=>setProfit(e.target.value)} />
+							<input type="checkbox" className="profit" onChange={event=>setForm({...form, [event.target.name]: !form.profit})} />
 						</section>
 					</FormControl>
 				</DialogContent>
@@ -202,11 +209,11 @@ export default function InformCard() {
 					<Button onClick={(e) => {
 						e.preventDefault()
 						if(itemId === undefined){
-							setCreatedAt(Date.parse(createdAt)/1000)
-							dispatch(addItem({description, category, imageUrl, price, profit, createdAt}))
+							setForm({...form, createdAt: Date.parse(form.createdAt)/1000})
+							dispatch(addItem({form}))
 							
 						} else {
-							dispatch(updateItem({description, category, imageUrl, price, profit, createdAt}, itemId))
+							dispatch(updateItem({form}, itemId))
 						}
 					}} color="primary">Save</Button>
 				</DialogActions>

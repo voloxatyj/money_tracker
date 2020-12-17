@@ -126,10 +126,10 @@ export const StickyHeadTable = () => {
   const [toolBtn, setToolBtn] = useState(false)
   const dispatch = useDispatch()
   const [value, setValue] = useState()
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-  console.log(state.filter(item=>item.profit === false).reduce((acc,next)=>acc+=Number(next.price),0))
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);

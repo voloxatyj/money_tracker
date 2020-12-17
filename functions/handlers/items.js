@@ -1,9 +1,7 @@
 const {
 	db,
 	config
-} = require('../utilits/config')
-
-// const category = require('../utilits/category')
+} = require('../utils/config')
 
 // get all items
 exports.getItems = (req, res) => {

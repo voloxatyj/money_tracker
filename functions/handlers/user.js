@@ -1,7 +1,7 @@
-const { db, config, admin } = require('../utilits/config')
+const { db, config, admin } = require('../utils/config')
 const firebase = require('firebase')
 firebase.initializeApp(config)
-const { validateSignUpData, validateLoginData } = require('../utilits/validate')
+const { validateSignUpData, validateLoginData } = require('../utils/validate')
 const { v4: uuidv4 } = require('uuid')
 
 exports.signUp = (req, res) => {

@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const app = require('express')()
-const DBAuth = require('./utilits/DBAuth')
-const { db, admin, config } = require('./utilits/config')
+const DBAuth = require('./utils/DBAuth')
+const { db, admin, config } = require('./utils/config')
 const { getItems, addItem, getItem, updateItem, deleteItem } = require('./handlers/items')
 const { signUp, login, uploadImage } = require('./handlers/user')
 const cors = require('cors')
