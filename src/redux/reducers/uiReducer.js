@@ -7,7 +7,7 @@ import {
 
 const initialState = {
 	loading: false,
-	error: null
+	error: {}
 }
 
 export default function(state=initialState, action) {
@@ -22,17 +22,19 @@ export default function(state=initialState, action) {
       return {
         ...state,
         loading: false,
-        error: null,
+        error: {},
       };
     case LOADING_UI:
       return {
         ...state,
         loading: true,
+        error: {}
       };
     case STOP_LOADING_UI:
       return {
         ...state,
         loading: false,
+        error: {}
       };
     default:
       return state;

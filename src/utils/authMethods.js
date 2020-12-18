@@ -1,10 +1,9 @@
 import firebase from 'firebase'
 import axios from 'axios'
-import jwt from 'jsonwebtoken'
-import store from '../../redux/store'
-import { getUser, setAuthorizationHeader } from '../../redux/actions/userActions'
-import { getData } from '../../redux/actions/dataActions'
-
+import store from '../redux/store'
+import { getUser } from '../redux/actions/userActions'
+import { getData } from '../redux/actions/dataActions'
+import { SET_ERRORS } from '../redux/types'
 firebase.initializeApp({
 	apiKey: "AIzaSyD5adg6COdhMVMHu3mUUq8zhhUYe3eHG2w",
 	authDomain: "make-and-save-c1e7a.firebaseapp.com"
@@ -36,4 +35,9 @@ export const Auth = (serviceAuth, history) => {
 				})
 				.catch(error => console.log(error.message))
 		})
-		.catch(error => console.log(error.message))}
+		.catch(error => {
+			store.dispatch({
+				type: SET_ERRORS,
+				payload: {general: error.message.slice(0,24)}
+			})}
+		)}

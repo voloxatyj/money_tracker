@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 export const Diagrams = () => {
   const data = useSelector(state => state.data.data)
-  // console.log('OUTPUT: Diagrams -> state.data.data', price)
   const charData = {
         labels: [],
         datasets: [

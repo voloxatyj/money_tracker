@@ -47,7 +47,6 @@ app.get('/user', DBAuth, (req,res) => {
 			return res.json(item)
 		})
 		.catch(err => {
-			console.log('err: ', err)
 			return res.status(500).json({ error: err.code })
 		})
 })

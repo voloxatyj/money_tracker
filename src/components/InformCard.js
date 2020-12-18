@@ -68,12 +68,7 @@ export default function InformCard() {
 	const itemId = useSelector(state => state.data.credentials.itemId)
 	const dispatch = useDispatch()
 	const [openCalendar, setOpenCalendar] = useState(false)
-  // const [description, setDescription] = useState(credentials.description) 
-	// const [category, setCategory] = useState(credentials.category)
-	// const [createdAt, setCreatedAt] = useState(credentials.createdAt)	
-	// const [imageUrl, setImageUrl] = useState(credentials.imageUrl)
-	// const [profit, setProfit] = useState(credentials.profit)
-	// const [price, setPrice] = useState(credentials.price)
+
 	const [form, setForm] = useState({
 		description: credentials.description, 
 		category: credentials.category,
@@ -84,12 +79,14 @@ export default function InformCard() {
 	})
 
 	useEffect(() => {
-		// setDescription(credentials.description)
-		// setCategory(credentials.category)
-		// setCreatedAt(credentials.createdAt)
-		// setImageUrl(credentials.imageUrl)
-		// setProfit(credentials.profit)
-		// setPrice(credentials.price)
+		setForm({
+		description: credentials.description, 
+		category: credentials.category,
+		createdAt: credentials.createdAt,
+		imageUrl: credentials.imageUrl,
+		profit: credentials.profit,
+		price: credentials.price
+		})
 	}, [credentials])
 
   return (
@@ -171,7 +168,7 @@ export default function InformCard() {
 								<DialogContent>
 									<Calendar
 										date={moment.utc(form.createdAt).toDate()}
-										onChange={event=>setForm({...form, createdAt: event })}
+										onChange={event=>setForm({...form, createdAt: event})}
 									/>
 								</DialogContent>
 							</Dialog>
@@ -195,12 +192,12 @@ export default function InformCard() {
 								name="price" 
 								value={form.price}
 								className={classes.input}
-								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value})} 
 							/>
 						</section>
 						<section className="form-field" name="profit">
 							<h3>profit</h3>
-							<input type="checkbox" className="profit" onChange={event=>setForm({...form, [event.target.name]: !form.profit})} />
+							<input type="checkbox" className="profit" onChange={event=>setForm({...form, [event.target.name]: !form.profit})}/>
 						</section>
 					</FormControl>
 				</DialogContent>
@@ -210,10 +207,10 @@ export default function InformCard() {
 						e.preventDefault()
 						if(itemId === undefined){
 							setForm({...form, createdAt: Date.parse(form.createdAt)/1000})
-							dispatch(addItem({form}))
+							dispatch(addItem(form))
 							
 						} else {
-							dispatch(updateItem({form}, itemId))
+							dispatch(updateItem(form, itemId))
 						}
 					}} color="primary">Save</Button>
 				</DialogActions>

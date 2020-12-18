@@ -19,7 +19,6 @@ exports.getItems = (req, res) => {
 					itemId: doc.data().itemId,
 					email: doc.data().email
 				})
-				console.log(doc.data().createdAt)
 			})
 			return res.json(items)
 		})
@@ -53,7 +52,6 @@ exports.addItem = (req, res) => {
 			return res.json(item)
 		})
 		.catch(err => {
-			console.log(err)
 			return res.status(500).json({
 				error: 'something went wrong'
 			})
@@ -76,7 +74,6 @@ exports.getItem = (req, res) => {
 			return res.json(item)
 		})
 		.catch(err => {
-			console.log('err: ', err)
 			return res.status(500).json({
 				error: err.code
 			})
@@ -107,7 +104,6 @@ exports.updateItem = (req, res) => {
 			}
 		})
 		.catch(err => {
-			console.log(err)
 			res.status(400).json({
 				error: err
 			})
@@ -131,7 +127,6 @@ exports.deleteItem = (req, res) => {
 			}
 		})
 		.catch(err => {
-			console.log(err)
 			res.status(400).json({
 				error: err
 			})

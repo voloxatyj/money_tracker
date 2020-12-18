@@ -2,23 +2,40 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '../components/layouts/Button'
 import { Link, useHistory } from 'react-router-dom'
-import { loginUser, signUpUser, setAuthorizationHeader } from '../redux/actions/userActions'
-import { Auth } from '../components/layouts/authMethods'
+import { loginUser, signUpUser } from '../redux/actions/userActions'
+import { Auth } from '../utils/authMethods'
 
 export const AuthForm = () => {
 	const [toggleSlides, setToggleSlides] = useState(false)
 	const history = useHistory()
 	const ui = useSelector(state => state.ui)
 	const dispatch = useDispatch()
-	const [name, setName] = useState('')
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [confirmPassword, setConfirmPassword] = useState('')
-	const [errors, setErrors] = useState('') 
+	const [form, setForm] = useState({name: '', email: '', password: '', confirmPassword: ''})
+	const [errors, setErrors] = useState({
+		general: ui.error?.general,
+		name: ui.error?.name,
+		password: ui.error?.password,
+		email: ui.error?.email
+	}) 
 	const [seeText, setSeeText] = useState(false)
 	const [seeConfirmText, setSeeConfirmText] = useState(false)
-	const [signIn, setSignIn] = useState(false)
-	useEffect(() => {ui.error !== null ? setErrors(ui.error) ? setErrors(signIn.code) : setErrors('') : setErrors('')}, [ui.error,signIn])
+
+	useEffect(() => {
+		Object.keys(ui?.error) !== 0 ? 
+		setErrors({
+			general: ui.error?.general,
+			name: ui.error?.name,
+			password: ui.error?.password,
+			confirmPassword: ui.error?.confirmPassword,
+			email: ui.error?.email}) : 
+		setErrors({
+			general: '',
+			name: '',
+			password: '',
+			confirmPassword: '',
+			email: ''
+			})
+		}, [ui.error])
 
 	return (
 			<div className="containerForm">
@@ -27,7 +44,7 @@ export const AuthForm = () => {
 						<form onSubmit={
 							(event) => {
 								event.preventDefault()
-								dispatch(signUpUser({name, email, password, confirmPassword}, history))
+								dispatch(signUpUser(form, history))
 							}
 						}>
 							<h1>Create Account</h1> 
@@ -37,31 +54,35 @@ export const AuthForm = () => {
 								<Link to="#" onClick={()=>Auth('twitter',history)}><i className="fab fa-twitter"></i></Link>
 								<Link to="#" onClick={()=>Auth('github',history)}><i className="fab fa-github"></i></Link>
 							</div>
-							{errors.general && (<span style={{ color: 'red', fontSize: '1.5rem' }}>{errors.account}</span>)}
+							{errors.general && (<span style={{ color: 'red', fontSize: '1.5rem' }}>{errors.general}</span>)}
 							<input 
 								type="text" 
-								value={name} 
-								onChange={event => setName(event.target.value)}
+								name="name"
+								value={form.name} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })}
 								placeholder="Name" />
 							{errors.name && (<span style={{color: 'red'}}>{errors.name}</span>)}
 							<input 
 								type="email" 
-								value={email} 
-								onChange={event=>setEmail(event.target.value)} 
+								name="email"
+								value={form.email} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 								placeholder="Email" />
 							{errors.email && (<span style={{color: 'red'}}>{errors.email}</span>)}
 							<input 
 								type={seeText?"text":"password"}
-								value={password} 
-								onChange={event=>setPassword(event.target.value)} 
+								name="password"
+								value={form.password} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 								placeholder="Password" />
 							{seeText?<i className="far fa-eye fa-lg" onClick={()=>setSeeText(false)}></i>:<i className="far fa-eye-slash fa-lg" onClick={()=>setSeeText(true)}></i>}
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
 							<input 
 								type={seeConfirmText?"text":"password"} 
-								value={confirmPassword}
+								value={form.confirmPassword}
+								name="confirmPassword"
 								style={{marginBottom: '1.5rem'}} 
-								onChange={event=>setConfirmPassword(event.target.value)} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 								placeholder="Confirm Password" />
 							{seeConfirmText?<span className="far fa-eye fa-lg" onClick={()=>setSeeConfirmText(false)}></span>:<span className="far fa-eye-slash fa-lg" onClick={()=>setSeeConfirmText(true)}></span>}
 							{errors.confirmPassword && (<span style={{ color: 'red' }}>{errors.confirmPassword}</span>)}
@@ -72,7 +93,7 @@ export const AuthForm = () => {
 						<form onSubmit={
 							(event) => {
 								event.preventDefault()
-								dispatch(loginUser({ email, password }, history))
+								dispatch(loginUser({email: form.email, password: form.password}, history))
 							}
 						}>
 							<h1>Sign in</h1>
@@ -85,21 +106,22 @@ export const AuthForm = () => {
 							{errors.general && (<span style={{ color: 'red', fontSize: '1.5rem' }}>{errors.general}</span>)}
 							<input 
 								type="email" 
-								value={email} 
-								onChange={event=>setEmail(event.target.value)} 
+								value={form.email}
+								name="email" 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 								placeholder="Email" />
 							{errors.email && (<span style={{ color: 'red' }}>{errors.email}</span>)}
 							<input 
 								type={seeText?"text":"password"} 
-								value={password} 
-								onChange={event=>setPassword(event.target.value)} 
+								name="password"
+								value={form.password} 
+								onChange={event=>setForm({...form, [event.target.name]: event.target.value })} 
 								placeholder="Password" />
 								{seeText?<i className="far fa-eye fa-lg" onClick={()=>setSeeText(false)}></i>:<i className="far fa-eye-slash fa-lg" onClick={()=>setSeeText(true)}></i>}
 							{errors.password && (<span style={{ color: 'red' }}>{errors.password}</span>)}
 							<Link to="#" onClick={() => {
 								setToggleSlides(!toggleSlides)
-								setPassword('')
-								setEmail('')
+								setForm({email: '', password: ''})
 								}} className="password">Forgot your password?</Link>
 						{ui.loading ? <i className="fas fa-spinner fa-pulse fa-lg" style={{ color: "var(--main-color)", marginTop: "1em" }}></i> : <Button type="submit">Sign In</Button>}
 						</form>
@@ -113,10 +135,7 @@ export const AuthForm = () => {
 								</p>
 								<Button className="ghost" onClick={() => {
 									setToggleSlides(!toggleSlides)
-									setPassword('')
-									setConfirmPassword('')
-									setEmail('')
-									setName('')
+									setForm({name: '', email: '', password: '', confirmPassword: ''})
 									setErrors('')
 								}}>Sign In</Button>
 							</div>
@@ -125,8 +144,7 @@ export const AuthForm = () => {
 								<p>Enter your personal details and start journey with us</p>
 								<Button className="ghost" onClick={() => {
 									setToggleSlides(!toggleSlides)
-									setPassword('')
-									setEmail('')
+									setForm({email: '', password: ''})
 									setErrors('')
 									}}>Sign Up</Button>
 							</div>
