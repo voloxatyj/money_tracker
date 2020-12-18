@@ -53,5 +53,5 @@ module.exports = [
     title: "Vacation",
     url:
       "https://firebasestorage.googleapis.com/v0/b/make-and-save-c1e7a.appspot.com/o/category%2Fvacation.png?alt=media&token=9f4f9c68-24e7-4e42-89f7-486a9d77761d",
-  }
+  },
 ];

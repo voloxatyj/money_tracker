@@ -1,8 +1,8 @@
 import { LOADING_DATA, UPDATE_DATA, DELETE_ITEM } from "../types";
 import axios from "axios";
 
-export const getData = () => dispatch => {
-	axios
+export const getData = () => (dispatch) => {
+  axios
     .get("/items")
     .then((res) => {
       dispatch({
@@ -11,33 +11,33 @@ export const getData = () => dispatch => {
       });
     })
     .catch((err) => console.log(err));
-}
+};
 
-export const addItem = item => dispatch => {
+export const addItem = (item) => (dispatch) => {
   axios
-    .post('/item', item)
-    .then(res => {
+    .post("/item", item)
+    .then((res) => {
       dispatch({
         type: UPDATE_DATA,
         payload: res.data,
       });
     })
     .catch((err) => console.log(err));
-}
+};
 
-export const updateItem = (item, itemId) => dispatch => {
+export const updateItem = (item, itemId) => (dispatch) => {
   axios
     .post(`/item/${itemId}`, item)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: UPDATE_DATA,
         payload: res.data,
       });
     })
     .catch((err) => console.log(err));
-}
+};
 
-export const deleteItem = (itemId) => dispatch => {
+export const deleteItem = (itemId) => (dispatch) => {
   axios
     .delete(`/item/${itemId}`)
     .then(() => {
@@ -47,4 +47,4 @@ export const deleteItem = (itemId) => dispatch => {
       });
     })
     .catch((err) => console.log(err));
-}
+};

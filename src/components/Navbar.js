@@ -1,14 +1,13 @@
-import React, {useState} from 'react'
-import { NavLink, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { NavbarLogo } from './layouts/NavbarLogo'
+import React, { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { NavbarLogo } from "./layouts/NavbarLogo";
 
 export const Navbar = () => {
-	
-	const [isHamburger, setIsHamburger] = useState(false)
-	const authenticated = useSelector(state => state.user.authenticated)
+  const [isHamburger, setIsHamburger] = useState(false);
+  const authenticated = useSelector((state) => state.user.authenticated);
 
-	return (
+  return (
     <nav>
       {authenticated ? (
         <>
@@ -22,13 +21,19 @@ export const Navbar = () => {
           </div>
           <ul className={isHamburger ? "nav-links open" : "nav-links"}>
             <li className={isHamburger ? "fade" : ""}>
-              <NavLink exact to="/" activeClassName="selected">Home</NavLink>
+              <NavLink exact to="/" activeClassName="selected">
+                Home
+              </NavLink>
             </li>
             <li className={isHamburger ? "fade" : ""}>
-              <NavLink to="/table" activeClassName="selected">Table</NavLink>
+              <NavLink to="/table" activeClassName="selected">
+                Table
+              </NavLink>
             </li>
             <li className={isHamburger ? "fade" : ""}>
-              <NavLink to="/diagrams" activeClassName="selected">Diagrams</NavLink>
+              <NavLink to="/diagrams" activeClassName="selected">
+                Diagrams
+              </NavLink>
             </li>
           </ul>
         </>
@@ -45,4 +50,4 @@ export const Navbar = () => {
       )}
     </nav>
   );
-}
+};

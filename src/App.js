@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react'
-import Home from './pages/Home'
-import { Navbar } from './components/Navbar'
-import { AuthForm } from './pages/AuthForm'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Card } from './components/layouts/Card'
+import React, { useEffect } from "react";
+import Home from "./pages/Home";
+import { Navbar } from "./components/Navbar";
+import { AuthForm } from "./pages/AuthForm";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Card } from "./components/layouts/Card";
 import { StickyHeadTable } from "./pages/Table";
-import { Diagrams } from './pages/Diagrams'
-import InformCard from './components/InformCard'
-import { setToken } from './utils/setToken'
-import './App.css'
-  /* REDUX */
-import { Provider } from 'react-redux'
-import store from './redux/store'
+import { Diagrams } from "./pages/Diagrams";
+import InformCard from "./components/InformCard";
+import { setToken } from "./utils/setToken";
+import "./App.css";
+/* REDUX */
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 export const App = () => {
-  useEffect(()=>{
-    setToken()
-  },[])
+  useEffect(() => {
+    setToken();
+  }, []);
   return (
     <Provider store={store}>
       <Router>
@@ -34,4 +34,4 @@ export const App = () => {
       </Router>
     </Provider>
   );
-}
+};

@@ -1,91 +1,92 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import styled from 'styled-components'
-import moment from 'moment'
-import { Link } from 'react-router-dom'
-import { logOutUser } from "../../redux/actions/userActions"
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+import moment from "moment";
+import { Link } from "react-router-dom";
+import { logOutUser } from "../../redux/actions/userActions";
 import store from "../../redux/store";
-import diary from './img/paper.png'
+import diary from "./img/paper.png";
 import FunctionsIcon from "@material-ui/icons/Functions";
-import { uploadImage } from '../../redux/actions/userActions'
+import { uploadImage } from "../../redux/actions/userActions";
 
 export const Card = () => {
+  const authenticated = useSelector((state) => state.user.authenticated);
+  const info = useSelector((state) => state.user.info.userCredentials);
+  const dispatch = useDispatch();
 
-	const authenticated = useSelector(state => state.user.authenticated)
-  const info = useSelector(state => state.user.info.userCredentials)
-  const dispatch = useDispatch()
+  const handleImageChange = (event) => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    dispatch(uploadImage(formData));
+  };
 
-  const handleImageChange = event => {
-		const image = event.target.files[0]
-		const formData = new FormData()
-		formData.append('image', image, image.name)
-		dispatch(uploadImage(formData))
-	}
+  const handleEditImage = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+  };
 
-	const handleEditImage = () => {
-		const fileInput = document.getElementById('imageInput')
-		fileInput.click()
-	}
-
-	return (
-    authenticated && info !== undefined && (
-    <CardContainer
-      className="animate__animated animate__fadeInDownBig"
-      style={{
-        display: "inline-flex",
-        justifyContent: "space-evenly",
-        alignItems: 'center',
-        width: "100%",
-        transition: "all 1s ease-out",
-      }}
-    >
-      <section>
-        <img className="img" src={info.imageUrl} alt="avatar" />
-      <div>
-        <h2>{info.name}</h2>
-        <p>{info.email}</p>
-        <p>Joined {moment(info.createdAt).fromNow()}</p>
-      </div>
-      <div className="social-container card">
-        <input 
-          type="file"
-          id="imageInput"
-          hidden="hidden"
-          onChange={(event) => handleImageChange(event)}
-        />
-        <Link to="#" className="icons" onClick={handleEditImage}>
-          <i className="fas fa-users-cog"></i>
-        </Link>  
-        <Link to="/table" className="icons">
-          <i className="fas fa-table"></i>
-        </Link>
-        <Link to="/diagrams" className="icons">
-          <i className="fas fa-chart-bar"></i>
-        </Link>
-        <Link
-          to="/authform"
-          className="icons"
-          onClick={() => {
-            store.dispatch(logOutUser());
-          }}
-        >
-          <i className="fas fa-sign-out-alt"></i>
-        </Link>
-      </div>
-    </section>
-    <div className="balance">
-      <img src={diary} alt="diary" />
-      <div className="context">
-        <h1 style={{ color: "green" }}>earnings</h1>
-        <i className="fas fa-minus"></i>
-        <h1 style={{ color: "red" }}>spending</h1>
-        <span className="span-line"></span>
-        <FunctionsIcon style={{ color: "var(--second-color)" }} />
-      </div>
-    </div>
-    </CardContainer>
-  ))
-}
+  return (
+    authenticated &&
+    info !== undefined && (
+      <CardContainer
+        className="animate__animated animate__fadeInDownBig"
+        style={{
+          display: "inline-flex",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+          width: "100%",
+          transition: "all 1s ease-out",
+        }}
+      >
+        <section>
+          <img className="img" src={info.imageUrl} alt="avatar" />
+          <div>
+            <h2>{info.name}</h2>
+            <p>{info.email}</p>
+            <p>Joined {moment(info.createdAt).fromNow()}</p>
+          </div>
+          <div className="social-container card">
+            <input
+              type="file"
+              id="imageInput"
+              hidden="hidden"
+              onChange={(event) => handleImageChange(event)}
+            />
+            <Link to="#" className="icons" onClick={handleEditImage}>
+              <i className="fas fa-users-cog"></i>
+            </Link>
+            <Link to="/table" className="icons">
+              <i className="fas fa-table"></i>
+            </Link>
+            <Link to="/diagrams" className="icons">
+              <i className="fas fa-chart-bar"></i>
+            </Link>
+            <Link
+              to="/authform"
+              className="icons"
+              onClick={() => {
+                store.dispatch(logOutUser());
+              }}
+            >
+              <i className="fas fa-sign-out-alt"></i>
+            </Link>
+          </div>
+        </section>
+        <div className="balance">
+          <img src={diary} alt="diary" />
+          <div className="context">
+            <h1 style={{ color: "green" }}>earnings</h1>
+            <i className="fas fa-minus"></i>
+            <h1 style={{ color: "red" }}>spending</h1>
+            <span className="span-line"></span>
+            <FunctionsIcon style={{ color: "var(--second-color)" }} />
+          </div>
+        </div>
+      </CardContainer>
+    )
+  );
+};
 
 const CardContainer = styled.div`
   .context {

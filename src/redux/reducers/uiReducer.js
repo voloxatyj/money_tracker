@@ -6,12 +6,12 @@ import {
 } from "../types";
 
 const initialState = {
-	loading: false,
-	error: {}
-}
+  loading: false,
+  error: {},
+};
 
-export default function(state=initialState, action) {
-	switch (action.type) {
+export default function (state = initialState, action) {
+  switch (action.type) {
     case SET_ERRORS:
       return {
         ...state,
@@ -28,13 +28,13 @@ export default function(state=initialState, action) {
       return {
         ...state,
         loading: true,
-        error: {}
+        error: {},
       };
     case STOP_LOADING_UI:
       return {
         ...state,
         loading: false,
-        error: {}
+        error: {},
       };
     default:
       return state;
