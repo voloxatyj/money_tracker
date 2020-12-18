@@ -71,7 +71,7 @@ export const logOutUser = () => (dispatch) => {
   delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: SET_UNAUTHENTICATED });
   dispatch({ type: STOP_LOADING_UI });
-  window.location.href = "/";
+  window.location.href = "/authform";
 };
 
 export const uploadImage = (formData) => (dispatch) => {

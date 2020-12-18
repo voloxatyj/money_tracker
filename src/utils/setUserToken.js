@@ -4,7 +4,7 @@ import { logOutUser, getUser } from "../redux/actions/userActions";
 import { getData } from "../redux/actions/dataActions";
 import store from "../redux/store";
 
-export const setToken = () => {
+export const setUserToken = () => {
   // axios.defaults.baseURL = `${process.env.REACT_APP_PRODUCTION_URL}`
   axios.defaults.baseURL = `${process.env.REACT_APP_DEVELOPMENT_URL}`;
   const token = localStorage.getItem("DBAuthToken") || null;

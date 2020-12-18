@@ -13,10 +13,8 @@ export const Card = () => {
   const authenticated = useSelector((state) => state.user.authenticated);
   const info = useSelector((state) => state.user.info.userCredentials);
   const dispatch = useDispatch();
-
   const handleImageChange = (event) => {
     const image = event.target.files[0];
-
     const formData = new FormData();
     formData.append("image", image, image.name);
     dispatch(uploadImage(formData));

@@ -7,7 +7,7 @@ import { Card } from "./components/layouts/Card";
 import { StickyHeadTable } from "./pages/Table";
 import { Diagrams } from "./pages/Diagrams";
 import InformCard from "./components/InformCard";
-import { setToken } from "./utils/setToken";
+import { setUserToken } from "./utils/setUserToken";
 import "./App.css";
 /* REDUX */
 import { Provider } from "react-redux";
@@ -15,7 +15,7 @@ import store from "./redux/store";
 
 export const App = () => {
   useEffect(() => {
-    setToken();
+    setUserToken();
   }, []);
   return (
     <Provider store={store}>
