@@ -78,7 +78,7 @@ export const AuthForm = () => {
             <input
               type="text"
               name="name"
-              value={form.name}
+              value={form.name === undefined ? "" : form.name}
               onChange={(event) =>
                 setForm({ ...form, [event.target.name]: event.target.value })
               }
@@ -88,7 +88,7 @@ export const AuthForm = () => {
             <input
               type="email"
               name="email"
-              value={form.email}
+              value={form.email === undefined ? "" : form.email}
               onChange={(event) =>
                 setForm({ ...form, [event.target.name]: event.target.value })
               }
@@ -100,7 +100,7 @@ export const AuthForm = () => {
             <input
               type={seeText ? "text" : "password"}
               name="password"
-              value={form.password}
+              value={form.password === undefined ? "" : form.password}
               onChange={(event) =>
                 setForm({ ...form, [event.target.name]: event.target.value })
               }
@@ -122,7 +122,9 @@ export const AuthForm = () => {
             )}
             <input
               type={seeConfirmText ? "text" : "password"}
-              value={form.confirmPassword}
+              value={
+                form.confirmPassword === undefined ? "" : form.confirmPassword
+              }
               name="confirmPassword"
               style={{ marginBottom: "1.5rem" }}
               onChange={(event) =>
@@ -188,7 +190,7 @@ export const AuthForm = () => {
             )}
             <input
               type="email"
-              value={form.email}
+              value={form.email === undefined ? "" : form.email}
               name="email"
               onChange={(event) =>
                 setForm({ ...form, [event.target.name]: event.target.value })
@@ -201,7 +203,7 @@ export const AuthForm = () => {
             <input
               type={seeText ? "text" : "password"}
               name="password"
-              value={form.password}
+              value={form.password === undefined ? "" : form.password}
               onChange={(event) =>
                 setForm({ ...form, [event.target.name]: event.target.value })
               }

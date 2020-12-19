@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import Home from "./pages/Home";
 import { Navbar } from "./components/Navbar";
 import { AuthForm } from "./pages/AuthForm";
@@ -21,7 +21,7 @@ export const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <>
+          <Fragment>
             <Navbar />
             <Card />
             <Route exact path="/" component={Home} />
@@ -29,7 +29,7 @@ export const App = () => {
             <Route exact path="/table/:item" component={InformCard} />
             <Route exact path="/authform" component={AuthForm} />
             <Route exact path="/diagrams" component={Diagrams} />
-          </>
+          </Fragment>
         </Switch>
       </Router>
     </Provider>

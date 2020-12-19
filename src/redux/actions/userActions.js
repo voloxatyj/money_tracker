@@ -29,7 +29,6 @@ export const loginUser = (userData, history) => (dispatch) => {
 };
 
 export const getUser = () => (dispatch) => {
-  dispatch({ type: LOADING_UI });
   axios
     .get("/user")
     .then((res) => {
@@ -49,7 +48,8 @@ export const signUpUser = (userData, history) => (dispatch) => {
       setAuthorizationHeader(res.data);
       dispatch(getUser());
       dispatch(getData());
-      dispatch({ type: "CLEAR_ERRORS" });
+      dispatch({ type: CLEAR_ERRORS });
+      dispatch({ type: STOP_LOADING_UI });
     })
     .then(() => history.push("/"))
     .catch((err) => {
@@ -67,6 +67,7 @@ export const setAuthorizationHeader = ({ token }) => {
 };
 
 export const logOutUser = () => (dispatch) => {
+  console.log("no");
   localStorage.removeItem("DBAuthToken");
   delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: SET_UNAUTHENTICATED });
